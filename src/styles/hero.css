@@ -1,0 +1,369 @@
+/* Hero: fundo preto, texto à esquerda e o símbolo extrudado em CSS 3D à direita.
+   Todo o vermelho da seção nasce em volta da logo. */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(64px, 8vw, 118px) 0 0;
+  background: #000;
+  color: #fff;
+  isolation: isolate;
+}
+
+/* Malha fina atrás da logo, em vermelho — mesma linguagem do .speedline. */
+.hero-mesh {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 36, 54, .09) 0 1px, transparent 1px 84px),
+    repeating-linear-gradient(0deg, rgba(255, 36, 54, .09) 0 1px, transparent 1px 84px);
+  -webkit-mask-image: radial-gradient(92% 76% at 74% 46%, #000 0%, transparent 62%);
+  mask-image: radial-gradient(92% 76% at 74% 46%, #000 0%, transparent 62%);
+}
+
+.hero .wrap {
+  position: relative;
+  z-index: 2;
+  padding-bottom: 0;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  gap: clamp(32px, 4.5vw, 68px);
+  align-items: center;
+  min-height: min(68vh, 600px);
+}
+
+/* =========================
+   LADO ESQUERDO
+========================= */
+
+.hero .eyebrow { color: #ff6b76; }
+.hero .eyebrow::before { background: #ff6b76; }
+
+.hero h1 {
+  font-size: clamp(34px, 3.8vw, 54px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.025em;
+  margin: 20px 0 24px;
+  color: #fff;
+}
+
+.hero h1 .accent { color: var(--red-bright); }
+
+.hero p {
+  font-size: clamp(15.5px, 1.2vw, 18px);
+  color: rgba(255, 255, 255, .62);
+  max-width: 44ch;
+  margin-bottom: clamp(28px, 3vw, 38px);
+}
+
+.hero-cta {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* O raio de 9px é o mesmo do botão do header: os dois blocos são um só. */
+.hero-btn {
+  padding: 15px 28px;
+  border-radius: 9px;
+  font-size: 15px;
+  box-shadow: 0 14px 30px rgba(210, 0, 28, .34);
+}
+
+.hero-btn:hover { box-shadow: 0 18px 36px rgba(210, 0, 28, .42); }
+
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid rgba(255, 255, 255, .22);
+  color: rgba(255, 255, 255, .72);
+  font-size: 14px;
+  font-weight: 600;
+  transition: color .2s, border-color .2s;
+}
+
+.hero-link:hover,
+.hero-link:focus-visible {
+  color: #fff;
+  border-bottom-color: var(--red-bright);
+}
+
+.hero-link span { transition: transform .2s; }
+.hero-link:hover span { transform: translateX(3px); }
+
+/* =========================
+   LADO DIREITO: A LOGO
+========================= */
+
+.hero-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+}
+
+/* Área que responde ao cursor: a coluna toda, não só a peça. */
+.hero-logo-stage {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: clamp(16px, 3vw, 40px);
+}
+
+/* Perspectiva curta e ponto de fuga alto: é o que faz a peça deitada parecer
+   apoiada no chão, com a borda da frente maior que a do fundo. */
+.hero-logo {
+  position: relative;
+  width: clamp(245px, 28vw, 380px);
+  perspective: 900px;
+  perspective-origin: 50% 26%;
+}
+
+/* O brilho acompanha o cursor (--pointer-x/y vêm do palco, já suavizados) e
+   ganha intensidade enquanto o mouse está por perto (--pointer-active). */
+.hero-logo-halo,
+.hero-logo-rings,
+.hero-logo-beams {
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Brilho difuso: a peça flutua num campo vermelho, não num fundo vermelho. */
+.hero-logo-halo {
+  width: 178%;
+  aspect-ratio: 1 / .78;
+  background:
+    radial-gradient(ellipse, rgba(255, 36, 54, .34) 0%, rgba(255, 36, 54, .13) 34%, transparent 66%);
+  opacity: calc(.84 + var(--pointer-active, 0) * .3);
+  transform: translate(
+    calc(-50% + var(--pointer-x, 0) * 18px),
+    calc(-50% + var(--pointer-y, 0) * 13px)
+  );
+}
+
+/* Anéis concêntricos, no espírito do círculo dos cards em destaque.
+   Deslocam ao contrário da peça, o que reforça a profundidade. */
+.hero-logo-rings {
+  width: 108%;
+  aspect-ratio: 1 / 1;
+  border: 1px solid rgba(255, 36, 54, .2);
+  border-radius: 50%;
+  opacity: calc(.8 + var(--pointer-active, 0) * .4);
+  transform: translate(
+    calc(-50% - var(--pointer-x, 0) * 9px),
+    calc(-50% - var(--pointer-y, 0) * 7px)
+  );
+}
+
+.hero-logo-rings::after {
+  content: "";
+  position: absolute;
+  inset: -13%;
+  border: 1px solid rgba(255, 36, 54, .1);
+  border-radius: 50%;
+}
+
+/* Feixes de luz, iguais aos do .about-visual. */
+.hero-logo-beams {
+  width: 190%;
+  height: 100%;
+  opacity: calc(.75 + var(--pointer-active, 0) * .4);
+  transform: translate(
+    calc(-50% + var(--pointer-x, 0) * 11px),
+    calc(-50% + var(--pointer-y, 0) * 8px)
+  );
+}
+
+.hero-logo-beams::before,
+.hero-logo-beams::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 36, 54, .7), transparent);
+  box-shadow: 0 0 26px 3px rgba(255, 36, 54, .3);
+  transform: rotate(-8deg);
+}
+
+.hero-logo-beams::before { top: 34%; }
+
+.hero-logo-beams::after {
+  top: 66%;
+  height: 1px;
+  opacity: .55;
+}
+
+/* Entrada + respiro vertical. A inclinação do mouse mora na camada de baixo,
+   então as duas animações nunca disputam a mesma propriedade. */
+.hero-logo-float {
+  position: relative;
+  z-index: 1;
+  animation:
+    hero-logo-in .9s .12s cubic-bezier(.16, 1, .3, 1) both,
+    hero-logo-drift 8s 1.1s ease-in-out infinite;
+}
+
+.hero-logo-scene {
+  /* 46deg = metade do caminho até o chão: a peça deitada apontando para a frente. */
+  --rest-x: 46deg;
+  --rest-y: 16deg;
+  --rest-z: -12deg;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  position: relative;
+  transform-style: preserve-3d;
+  /* A escala é o "avanço" da peça quando o cursor chega perto. */
+  transform:
+    rotateX(calc(var(--rest-x) + var(--tilt-x)))
+    rotateY(calc(var(--rest-y) + var(--tilt-y)))
+    rotateZ(var(--rest-z))
+    scale(calc(1 + var(--pointer-active, 0) * .04));
+  will-change: transform;
+}
+
+.hero-logo-solid {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1024 / 1536;
+  transform-style: preserve-3d;
+}
+
+.hero-logo-bloom,
+.hero-logo-layer,
+.hero-logo-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Vem antes das camadas no DOM, então fica atrás delas. */
+.hero-logo-bloom {
+  color: var(--red-bright);
+  filter: blur(26px);
+  opacity: calc(.6 + var(--pointer-active, 0) * .3);
+  transform: scale(1.04);
+}
+
+.hero-logo-face { filter: drop-shadow(0 20px 30px rgba(0, 0, 0, .6)); }
+
+/* =========================
+   NÚMEROS
+========================= */
+
+.hero-stats {
+  display: flex;
+  gap: 0;
+  margin-top: clamp(46px, 6vw, 80px);
+  border-top: 1px solid rgba(255, 255, 255, .14);
+  position: relative;
+  z-index: 2;
+}
+
+.stat {
+  flex: 1;
+  padding: 20px 20px 40px 0;
+  border-right: 1px solid rgba(255, 255, 255, .14);
+  position: relative;
+}
+
+.stat::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 34px;
+  height: 2px;
+  background: var(--red-bright);
+}
+
+.stat:last-child { border-right: none; }
+
+.stat .n {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(24px, 2.4vw, 30px);
+  font-weight: 700;
+  color: #fff;
+}
+
+.stat .l {
+  font-size: 13px;
+  color: rgba(255, 255, 255, .5);
+  margin-top: 4px;
+}
+
+/* =========================
+   ENTRADA
+========================= */
+
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes hero-logo-in {
+  from { opacity: 0; transform: translateY(34px) scale(.94); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes hero-logo-drift {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+
+.hero-content > * { animation: hero-rise .7s cubic-bezier(.16, 1, .3, 1) both; }
+.hero-content > *:nth-child(1) { animation-delay: .04s; }
+.hero-content > *:nth-child(2) { animation-delay: .12s; }
+.hero-content > *:nth-child(3) { animation-delay: .2s; }
+.hero-content > *:nth-child(4) { animation-delay: .28s; }
+.hero-stats { animation: hero-rise .7s .36s cubic-bezier(.16, 1, .3, 1) both; }
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 960px) {
+  .hero-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(44px, 8vw, 68px);
+    min-height: 0;
+  }
+
+  .hero-logo { width: clamp(215px, 48vw, 310px); }
+
+  .hero-mesh {
+    -webkit-mask-image: radial-gradient(120% 74% at 50% 66%, #000 0%, transparent 66%);
+    mask-image: radial-gradient(120% 74% at 50% 66%, #000 0%, transparent 66%);
+  }
+}
+
+@media (max-width: 600px) {
+  .hero { padding-top: 52px; }
+  .hero h1 { font-size: clamp(31px, 8.4vw, 42px); }
+  .hero-logo { width: min(68vw, 270px); }
+  .hero-cta { gap: 16px; }
+  .hero-logo-beams { width: 150%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-content > *,
+  .hero-stats,
+  .hero-logo-float { animation: none; }
+  .hero-logo-scene { transform: rotateX(46deg) rotateY(16deg) rotateZ(-12deg); }
+}

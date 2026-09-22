@@ -1,0 +1,13 @@
+Imagens dos cards de servico (nomes usados em src/data/services.js):
+
+  landing-pages.jpg
+  sistemas-sob-medida.jpg
+  automacao-ia.jpg
+  dashboards-paineis.jpg
+  chatbots.jpg
+  e-commerce.jpg
+  integracoes-personalizadas.jpg
+  consultoria-suporte.jpg
+
+Enquanto o arquivo nao existir, o card mantem o painel reservado (sem imagem
+generica no lugar). Proporcao sugerida: 16:10 ou mais largo.

@@ -1,0 +1,132 @@
+/* Processo: cards conectados + modal da etapa. */
+  /* Connected process: six steps in two rows of three, snaking left to right, then right to left. */
+  .process-flow{
+    position:relative;
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:120px 90px;
+    padding:0 0 48px;
+    isolation:isolate;
+  }
+
+  #processo{background:var(--ink); color:#F5F5F5; position:relative; overflow:hidden;}
+  #processo::before{
+    content:""; position:absolute; top:-30%; left:-14%;
+    width:58%; height:170%;
+    background:var(--red); opacity:.11;
+    transform:skewX(-14deg);
+    pointer-events:none;
+  }
+  #processo .wrap{position:relative; z-index:2;}
+  #processo .eyebrow{color:var(--red-bright);}
+  #processo .eyebrow::before{background:var(--red-bright);}
+  /* Sem o parágrafo de apoio, o título carrega a seção sozinho (alinhado à esquerda, como nas outras). */
+  #processo .section-head{margin-bottom:56px;}
+  #processo .section-head h2{font-size:clamp(34px,4.5vw,48px); max-width:740px; margin-top:18px; letter-spacing:-.01em; color:#F5F5F5;}
+  .process-flow .process-step{box-shadow:0 8px 20px rgba(0,0,0,.22);}
+  /* O modal usa um vermelho mais fechado para acomodar o texto longo. */
+  .process-step{position:relative; z-index:1; background:linear-gradient(160deg,#B81B30 0%,#A80E25 100%); color:#fff; border:1px solid rgba(255,255,255,.24); border-radius:6px; padding:20px; min-height:188px; overflow:hidden; transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease; display:flex; flex-direction:column;}
+  @media(hover:hover) and (pointer:fine){
+    .process-step:hover{transform:translateY(-3px);}
+  }
+
+  .process-flow .process-step:hover{box-shadow:0 12px 24px rgba(0,0,0,.28); border-color:rgba(255,255,255,.55);}
+  .process-step:nth-child(1){grid-area:1 / 1; --step-modal-color:#8C0F2A;}
+  .process-step:nth-child(2){grid-area:1 / 2; top:38px; --step-modal-color:#7B0E26;}
+  .process-step:nth-child(3){grid-area:1 / 3; --step-modal-color:#6A0E21;}
+  .process-step:nth-child(4){grid-area:2 / 3; --step-modal-color:#5A0D1D;}
+  .process-step:nth-child(5){grid-area:2 / 2; top:38px; --step-modal-color:#490D18;}
+  .process-step:nth-child(6){grid-area:2 / 1; --step-modal-color:#380C14;}
+
+  .process-step-head{display:flex; flex-direction:column; align-items:center; margin-bottom:16px;}
+  /* Disco claro com o ícone em vermelho: o maior contraste disponível dentro do card. */
+  .process-step-icon{
+    position:relative;
+    width:56px; height:56px; border-radius:50%;
+    display:grid; place-items:center; flex-shrink:0;
+    background:#FFF5E1;
+    border:none;
+    color:var(--red-deep);
+    box-shadow:0 5px 14px rgba(0,0,0,.18);
+    transition:transform .3s ease;
+  }
+  /* Halo que separa o disco do vermelho chapado do card. */
+  .process-step-icon::after{
+    content:""; position:absolute; inset:-9px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.34);
+  }
+  .process-step-icon svg{width:31px; height:31px;}
+  @media(hover:hover) and (pointer:fine){
+    .process-step:hover .process-step-icon{transform:scale(1.03);}
+  }
+  .process-step{text-align:center;}
+  .process-step h3{font-size:19px; font-weight:700; margin:0 0 10px; line-height:1.2; letter-spacing:-.02em; color:#fff; text-wrap:balance;}
+  .process-step-tag{color:rgba(255,255,255,.88); font-size:12.5px; font-weight:500; line-height:1.5; margin-bottom:2px;}
+
+  /* Entrada em sequência (duração espelhada no cardDur de main.js).
+     A classe é aplicada e removida pelo JS, então o hover volta à transição normal no fim. */
+  .process-flow.is-reveal-ready .process-step{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity .45s ease, transform .45s cubic-bezier(.16,1,.3,1);
+  }
+  .process-flow.is-reveal-ready .process-step.is-revealed{opacity:1; transform:none;}
+
+  /* Keep the decorative connectors below the sticky navigation. */
+  .leader-line{z-index:2 !important; pointer-events:none;}
+  .process-step.is-expandable{justify-content:space-between; align-items:center; gap:12px;}
+  .process-step-open{position:absolute; inset:0; z-index:2; width:100%; border:0; border-radius:inherit; background:transparent; color:inherit; cursor:pointer;}
+  .process-step-hint{display:flex; align-items:center; justify-content:center; gap:10px; font-size:11px; color:rgba(255,255,255,.86); margin-top:auto; padding-top:12px;}
+  .process-step-info{display:grid; place-items:center; width:26px; height:26px; border:1px solid currentColor; border-radius:50%; font-family:Georgia,serif; font-size:17px; font-weight:700; transition:transform .25s;}
+  .process-step:hover .process-step-info{transform:scale(1.03);}
+  .process-step:focus-within{outline:3px solid #fff; outline-offset:5px;}
+  .process-step-open:focus-visible{outline:none;}
+  html.process-modal-open{overflow:hidden;}
+  .process-modal{position:fixed; inset:0; margin:auto; padding:0; width:min(620px,calc(100% - 32px)); max-height:calc(100dvh - 48px); border:1px solid var(--line); border-radius:28px; color:#FFF5E1; background:var(--step-modal-color,var(--step-color,#800020)); overflow:auto; box-shadow:0 32px 100px rgba(0,0,0,.3);}
+  .process-modal::backdrop{background:rgba(20,20,20,.68); backdrop-filter:blur(8px);}
+  .process-modal-panel{position:relative; padding:56px 44px 44px;}
+  .process-modal-icon{
+    display:grid; place-items:center;
+    width:44px; height:44px; border-radius:50%;
+    background:rgba(0,0,0,.2); border:1px solid rgba(255,245,225,.3); color:#FFF5E1;
+    margin-bottom:22px;
+  }
+  .process-modal-icon svg{width:23px; height:23px;}
+  .process-modal-number{display:block; font:500 14px 'JetBrains Mono',monospace; color:#E6D7B9; margin-bottom:10px;}
+  .process-modal h2{font-size:clamp(28px,5vw,44px); line-height:1.12; margin:16px 0 12px; overflow-wrap:anywhere;}
+  .process-modal-summary{color:#FFF5E1; font-size:16px; font-weight:700; margin-bottom:22px;}
+  .process-modal-body{color:#F7ECD4; font-size:16px; line-height:1.8;}
+  .process-modal-body p{margin-bottom:22px;}
+  .process-modal-close{position:absolute; top:18px; right:18px; width:40px; height:40px; border:1px solid var(--line); border-radius:50%; background:var(--paper-2); color:var(--ink); font-size:26px; cursor:pointer;}
+  .process-modal-close:hover{background:var(--ink); color:#fff;}
+  .process-modal :focus-visible{outline:3px solid #E6D7B9; outline-offset:4px;}
+  .process-modal .eyebrow{color:#E6D7B9;}
+  .process-modal .eyebrow::before{background:currentColor;}
+  .process-modal .service-highlights{margin-bottom:32px;}
+  .process-modal .service-highlights li::before{background:#E6D7B9;}
+  .process-modal .process-modal-contact{background:#FFF5E1; color:#3B0A12; border-color:#FFF5E1;}
+  .process-modal .process-modal-contact:hover{background:#E6D7B9; border-color:#E6D7B9;}
+
+  @media(max-width:520px){
+    .process-modal-panel{padding:56px 24px 28px;}
+    .process-modal-contact{display:block; text-align:center;}
+  }
+
+  /* Entre o mobile e o desktop três colunas ficam estreitas demais: volta ao zigue-zague de duas. */
+  @media(min-width:761px) and (max-width:1080px){
+    .process-flow{grid-template-columns:repeat(2,minmax(0,1fr)); gap:110px 90px;}
+    .process-flow .process-step:nth-child(1){grid-area:1 / 1; top:0;}
+    .process-flow .process-step:nth-child(2){grid-area:1 / 2; top:38px;}
+    .process-flow .process-step:nth-child(3){grid-area:2 / 2; top:38px;}
+    .process-flow .process-step:nth-child(4){grid-area:2 / 1; top:0;}
+    .process-flow .process-step:nth-child(5){grid-area:3 / 1; top:0;}
+    .process-flow .process-step:nth-child(6){grid-area:3 / 2; top:38px;}
+  }
+
+  @media(max-width:760px){
+    .process-flow{grid-template-columns:minmax(0,1fr); gap:72px; padding:0;}
+    .process-flow .process-step:nth-child(n){grid-column:1; grid-row:auto; top:0; min-height:188px; width:min(100%,420px); justify-self:center; padding:20px;}
+    #processo .section-head{margin-bottom:44px;}
+  }
+

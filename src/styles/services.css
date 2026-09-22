@@ -1,0 +1,519 @@
+/* Serviços: uma grade só, oito cards do mesmo tamanho, quatro por linha.
+   Os quatro principais abrem a grade e se diferenciam por detalhe — não por
+   escala. Fundo, iluminação e sombras seguem o Hero: a seção é a continuação
+   dele, não um bloco novo. */
+
+/* Fundo claro herdado do protótipo: hoje só a seção "Quem somos" usa. */
+.services-bg { background: var(--paper-2); }
+
+.services-section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(74px, 8.5vw, 112px) 0;
+  background: #000;
+  color: #fff;
+  isolation: isolate;
+}
+
+/* Malha e brilho: o mesmo vocabulário do Hero, em intensidade menor. */
+.services-mesh {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 36, 54, .07) 0 1px, transparent 1px 84px),
+    repeating-linear-gradient(0deg, rgba(255, 36, 54, .07) 0 1px, transparent 1px 84px);
+  -webkit-mask-image: radial-gradient(100% 58% at 50% 0%, #000 0%, transparent 72%);
+  mask-image: radial-gradient(100% 58% at 50% 0%, #000 0%, transparent 72%);
+}
+
+.services-glow {
+  position: absolute;
+  top: -16%;
+  left: 50%;
+  width: min(1180px, 130%);
+  aspect-ratio: 2 / 1;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(255, 36, 54, .16) 0%, transparent 62%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.services-section .wrap {
+  position: relative;
+  z-index: 2;
+}
+
+.services-section .section-head {
+  margin-bottom: clamp(32px, 4vw, 48px);
+}
+
+.services-section .section-head h2 {
+  font-size: clamp(29px, 3.4vw, 42px);
+  letter-spacing: -.02em;
+  color: #fff;
+}
+
+.services-section .section-head p { color: rgba(255, 255, 255, .55); }
+
+/* =========================
+   A GRADE
+========================= */
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(13px, 1.6vw, 20px);
+}
+
+.service-card {
+  --lift: 0px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, .09);
+  border-radius: 16px;
+  background: linear-gradient(180deg, #0F0F11 0%, #08080A 100%);
+  /* A inclinação vem do cursor (--card-rx/ry); o deslocamento, do hover. */
+  transform:
+    perspective(900px)
+    rotateX(var(--card-rx, 0deg))
+    rotateY(var(--card-ry, 0deg))
+    translateY(var(--lift));
+  transition: transform .25s ease-out, border-color .3s, box-shadow .3s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .service-card:hover {
+    --lift: -4px;
+    border-color: rgba(255, 255, 255, .15);
+    box-shadow: 0 20px 44px rgba(0, 0, 0, .5);
+  }
+
+  /* Destaque sutil: os principais sobem um pouco mais e ganham um halo. */
+  .service-card.is-featured:hover {
+    --lift: -6px;
+    box-shadow: 0 24px 52px rgba(0, 0, 0, .55), 0 0 34px rgba(255, 36, 54, .09);
+  }
+}
+
+/* Luz que segue o cursor dentro do card. */
+.service-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background: radial-gradient(
+    320px circle at var(--spot-x, 50%) var(--spot-y, 0px),
+    rgba(255, 36, 54, .13),
+    transparent 62%
+  );
+  opacity: 0;
+  transition: opacity .35s;
+  pointer-events: none;
+}
+
+/* A borda acende só no trecho perto do cursor. */
+.service-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    240px circle at var(--spot-x, 50%) var(--spot-y, 0px),
+    rgba(255, 90, 102, .7),
+    transparent 62%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .35s;
+  pointer-events: none;
+}
+
+.service-card.is-featured::after {
+  background: radial-gradient(
+    240px circle at var(--spot-x, 50%) var(--spot-y, 0px),
+    rgba(255, 110, 120, .9),
+    transparent 62%
+  );
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .service-card:hover::before,
+  .service-card:hover::after { opacity: 1; }
+}
+
+.service-card > * { position: relative; z-index: 2; }
+
+/* Painel reservado para a ilustração do serviço. Enquanto o arquivo não existe,
+   ele segue sendo um painel — nada de imagem genérica no lugar. */
+.service-card-media {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, .06);
+  background:
+    radial-gradient(120% 130% at 50% 0%, rgba(255, 255, 255, .05) 0%, transparent 58%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .04) 0 1px, transparent 1px 26px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, .04) 0 1px, transparent 1px 26px),
+    #0A0A0C;
+}
+
+/* Painel mais trabalhado nos principais: a luz vermelha do Hero entra aqui. */
+.service-card.is-featured .service-card-media {
+  background:
+    radial-gradient(120% 130% at 50% 0%, rgba(255, 36, 54, .2) 0%, transparent 60%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .045) 0 1px, transparent 1px 26px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, .045) 0 1px, transparent 1px 26px),
+    #0A0A0C;
+}
+
+.service-card.is-featured .service-card-media::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--red-bright) 0%, rgba(255, 36, 54, 0) 70%);
+}
+
+.service-card-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity .4s ease, transform .5s cubic-bezier(.16, 1, .3, 1);
+}
+
+.service-card-media.has-image img { opacity: 1; }
+
+@media (hover: hover) and (pointer: fine) {
+  .service-card:hover .service-card-media.has-image img { transform: scale(1.04); }
+}
+
+.service-card-num {
+  position: absolute;
+  top: 11px;
+  left: 13px;
+  z-index: 1;
+  font: 500 11.5px 'JetBrains Mono', monospace;
+  letter-spacing: .16em;
+  color: rgba(255, 255, 255, .45);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, .75);
+}
+
+.service-card.is-featured .service-card-num { color: #ff6b76; }
+
+.service-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  padding: 15px 7px 5px;
+}
+
+.service-card h3 {
+  font-size: 16.5px;
+  font-weight: 700;
+  letter-spacing: -.012em;
+  line-height: 1.25;
+}
+
+.service-card-summary {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, .56);
+}
+
+.service-card-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: auto;
+  padding-top: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, .6);
+  transition: color .25s;
+}
+
+.service-card-cue-icon {
+  display: grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 50%;
+  font-size: 11.5px;
+  transition: background .25s, border-color .25s, color .25s, transform .25s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .service-card:hover .service-card-cue { color: #fff; }
+
+  .service-card:hover .service-card-cue-icon {
+    background: rgba(255, 255, 255, .1);
+    border-color: rgba(255, 255, 255, .3);
+    transform: translate(1px, -1px);
+  }
+
+  /* Nos principais a seta assume o vermelho da marca. */
+  .service-card.is-featured:hover .service-card-cue-icon {
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+  }
+}
+
+/* O card inteiro é o alvo do clique e do teclado. */
+.service-card-trigger {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  width: 100%;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.service-card-trigger:focus-visible { outline: none; }
+
+.service-card:focus-within {
+  outline: 2px solid var(--red-bright);
+  outline-offset: 3px;
+}
+
+/* Entrada ao rolar. `translate` (propriedade própria) em vez de `transform`:
+   assim não briga com a inclinação nem com o hover. */
+.services-grid > * {
+  opacity: 0;
+  translate: 0 20px;
+  transition: opacity .55s ease, translate .55s cubic-bezier(.16, 1, .3, 1);
+  transition-delay: calc(var(--i, 0) * 55ms);
+}
+
+.services-grid.is-visible > * {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* =========================
+   DETALHE DO SERVIÇO
+========================= */
+
+html.service-modal-open { overflow: hidden; }
+
+.service-modal {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  padding: 0;
+  width: min(660px, calc(100% - 32px));
+  max-height: calc(100dvh - 48px);
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 22px;
+  background: linear-gradient(180deg, #121214 0%, #050506 100%);
+  color: #fff;
+  box-shadow: 0 40px 110px rgba(0, 0, 0, .7);
+}
+
+.service-modal::backdrop {
+  background: rgba(0, 0, 0, .78);
+  backdrop-filter: blur(9px);
+}
+
+.service-modal-panel { position: relative; }
+
+.service-modal-media {
+  position: relative;
+  aspect-ratio: 16 / 7;
+  overflow: hidden;
+  background:
+    radial-gradient(110% 130% at 50% 0%, rgba(255, 36, 54, .2) 0%, transparent 60%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .045) 0 1px, transparent 1px 34px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, .045) 0 1px, transparent 1px 34px),
+    #0A0A0C;
+}
+
+.service-modal-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+
+.service-modal-media.has-image img { opacity: 1; }
+
+.service-modal-number {
+  position: absolute;
+  left: 30px;
+  bottom: 18px;
+  font: 500 13px 'JetBrains Mono', monospace;
+  letter-spacing: .18em;
+  color: rgba(255, 255, 255, .62);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, .7);
+}
+
+.service-modal-content { padding: 32px 34px 34px; }
+
+.service-modal .eyebrow { color: #ff6b76; }
+.service-modal .eyebrow::before { background: currentColor; }
+
+.service-modal-title {
+  font-size: clamp(26px, 4.2vw, 36px);
+  line-height: 1.12;
+  letter-spacing: -.02em;
+  margin: 14px 0 12px;
+  overflow-wrap: anywhere;
+}
+
+.service-modal-summary {
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, .66);
+  margin-bottom: 26px;
+}
+
+.service-modal-body {
+  color: rgba(255, 255, 255, .78);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.service-modal-body p { margin-bottom: 26px; }
+
+.service-modal-subtitle {
+  margin-bottom: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .45);
+}
+
+/* Base da lista de destaques — o modal do processo também herda daqui. */
+.service-highlights {
+  list-style: none;
+  display: grid;
+  gap: 11px;
+  margin: 0 0 30px;
+}
+
+.service-highlights li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, .85);
+}
+
+.service-highlights li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 11px;
+  height: 1px;
+  background: var(--red-bright);
+}
+
+/* Fecha o caminho: entendeu o serviço, fala com a equipe. */
+.service-modal-cta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, .09);
+}
+
+.service-modal .service-modal-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border-radius: 9px;
+  background: var(--red);
+  border-color: var(--red);
+  font-size: 14.5px;
+  box-shadow: 0 14px 30px rgba(210, 0, 28, .3);
+}
+
+.service-modal .service-modal-contact:hover {
+  background: var(--red-bright);
+  border-color: var(--red-bright);
+}
+
+.service-modal-note {
+  flex: 1;
+  min-width: 180px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, .42);
+}
+
+.service-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .22);
+  background: rgba(10, 10, 12, .6);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+
+.service-modal-close:hover {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+.service-modal :focus-visible {
+  outline: 3px solid #ff6b76;
+  outline-offset: 4px;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+/* Tablet: duas colunas. Nunca quatro cards espremidos. */
+@media (max-width: 1040px) {
+  .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 620px) {
+  .services-grid { grid-template-columns: minmax(0, 1fr); }
+  .service-card-media { aspect-ratio: 16 / 9; }
+  .service-card h3 { font-size: 17.5px; }
+  .service-card-summary { font-size: 13.5px; }
+  .service-modal-content { padding: 26px 22px 28px; }
+  .service-modal-media { aspect-ratio: 16 / 9; }
+  .service-modal-number { left: 22px; }
+  .service-modal .service-modal-contact { width: 100%; justify-content: center; }
+}

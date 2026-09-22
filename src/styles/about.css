@@ -1,0 +1,11 @@
+/* Quem somos. */
+  .about{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;}
+  .about-visual{aspect-ratio:1/1; background:var(--ink); position:relative; overflow:hidden; border-radius:4px;}
+  .about-visual .track{position:absolute; inset:0; background:repeating-linear-gradient(115deg, transparent 0 22px, rgba(255,255,255,.04) 22px 23px);}
+  .about-visual .beam{position:absolute; top:50%; left:-20%; width:140%; height:4px; background:linear-gradient(90deg, transparent, var(--red-bright), transparent); transform:translateY(-50%) rotate(-8deg); box-shadow:0 0 30px 4px rgba(255,36,54,.55);}
+  .about-visual .beam.b2{top:30%; height:2px; opacity:.5;}
+  .about-visual .beam.b3{top:70%; height:2px; opacity:.5;}
+  .about-visual .tag{position:absolute; bottom:24px; left:24px; color:#fff; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.08em; opacity:.7;}
+  .about h2{font-size:34px; margin-bottom:18px; font-weight:800;}
+  .about p{color:var(--grey); margin-bottom:16px; font-size:15px;}
+
