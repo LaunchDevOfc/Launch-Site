@@ -1,27 +1,29 @@
+import { useInView } from '../hooks/useInView.js';
+
 export default function About() {
-  return (
-    <section className="section services-bg" id="sobre">
-      <div className="wrap about">
-        <div className="about-visual">
-          <div className="track" />
-          <div className="beam b2" />
-          <div className="beam" />
-          <div className="beam b3" />
-          <div className="tag">LAUNCH BUILD &amp; SHIP</div>
-        </div>
-        <div>
-          <div className="eyebrow">Quem somos</div>
-          <h2>Uma software house pequena, feita para mover rápido.</h2>
-          <p>
-            A Launch nasceu para atender quem precisa de software sob demanda, sem processos inchados, sem enrolação.
-            Você fala o que precisa, a gente projeta e constrói.
-          </p>
-          <p>
-            Cada sistema que entregamos, também mantemos. Por isso o suporte depois da entrega é parte do serviço, não
-            um extra.
-          </p>
-        </div>
+  const [sectionRef, isVisible] = useInView({ rootMargin: '-80px' });
+
+  return <section className={`section about-section${isVisible ? ' is-visible' : ''}`} id="sobre" ref={sectionRef}>
+    <div className="wrap about">
+      <div className="about-visual" aria-hidden="true">
+        <div className="about-visual-grid" />
+        <div className="about-visual-orbit about-visual-orbit-one" />
+        <div className="about-visual-orbit about-visual-orbit-two" />
+        <img className="about-visual-logo" src="/launch-logo1.svg" alt="" />
+        <div className="about-visual-label">LAUNCH / BUILD &amp; SHIP</div>
       </div>
-    </section>
-  );
+      <div className="about-copy">
+        <div className="eyebrow">Quem somos</div>
+        <h2>Software sob medida, com clareza do primeiro rascunho ao próximo passo.</h2>
+        <p className="about-lead">A Launch é uma software house pequena para empresas que precisam transformar uma operação real em uma solução que funciona de verdade.</p>
+        <p>Entendemos o contexto, desenhamos o caminho e construímos perto de quem vai usar. Sem camadas desnecessárias e sem entregar um sistema para desaparecer depois.</p>
+        <div className="about-points">
+          <div><strong>01</strong><span>Conversa direta com quem constrói.</span></div>
+          <div><strong>02</strong><span>Decisões técnicas explicadas com clareza.</span></div>
+          <div><strong>03</strong><span>Suporte para o produto continuar evoluindo.</span></div>
+        </div>
+        <a className="btn about-cta" href="#contato">Conhecer nosso jeito de trabalhar <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>;
 }

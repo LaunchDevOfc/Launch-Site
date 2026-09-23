@@ -5,7 +5,6 @@ import Process from './components/Process.jsx';
 import OperationsComparison from './components/OperationsComparison.jsx';
 import About from './components/About.jsx';
 import Contact from './components/Contact.jsx';
-import Logo3D from './components/Logo3D.jsx';
 import Footer from './components/Footer.jsx';
 
 export default function App() {
@@ -18,7 +17,6 @@ export default function App() {
       <OperationsComparison />
       <About />
       <Contact />
-      <Logo3D />
       <Footer />
     </>
   );

@@ -1,11 +1,42 @@
 /* Quem somos. */
-  .about{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;}
-  .about-visual{aspect-ratio:1/1; background:var(--ink); position:relative; overflow:hidden; border-radius:4px;}
-  .about-visual .track{position:absolute; inset:0; background:repeating-linear-gradient(115deg, transparent 0 22px, rgba(255,255,255,.04) 22px 23px);}
-  .about-visual .beam{position:absolute; top:50%; left:-20%; width:140%; height:4px; background:linear-gradient(90deg, transparent, var(--red-bright), transparent); transform:translateY(-50%) rotate(-8deg); box-shadow:0 0 30px 4px rgba(255,36,54,.55);}
-  .about-visual .beam.b2{top:30%; height:2px; opacity:.5;}
-  .about-visual .beam.b3{top:70%; height:2px; opacity:.5;}
-  .about-visual .tag{position:absolute; bottom:24px; left:24px; color:#fff; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.08em; opacity:.7;}
-  .about h2{font-size:34px; margin-bottom:18px; font-weight:800;}
-  .about p{color:var(--grey); margin-bottom:16px; font-size:15px;}
+.about-section { background: var(--paper-2); border-top: 1px solid var(--line); }
+.about { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); gap: clamp(42px, 7vw, 96px); align-items: center; }
+.about-visual, .about-copy { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .8s cubic-bezier(.16,1,.3,1); }
+.about-copy { transition-delay: .12s; }
+.about-section.is-visible .about-visual, .about-section.is-visible .about-copy { opacity: 1; transform: none; }
+.about-visual { aspect-ratio: 1 / .92; min-height: 420px; background: var(--ink); position: relative; overflow: hidden; border-radius: 4px; isolation: isolate; box-shadow: 18px 18px 0 rgba(210,0,28,.12); }
+.about-visual::before { content: ''; position: absolute; z-index: 2; top: -35%; left: -30%; width: 18%; height: 170%; background: linear-gradient(90deg, transparent, rgba(255,90,100,.24), transparent); transform: rotate(18deg); filter: blur(4px); animation: about-light-sweep 5s ease-in-out infinite; pointer-events: none; }
+.about-visual::after { content: ''; position: absolute; inset: 0; background: linear-gradient(125deg, transparent 34%, rgba(255,36,54,.18) 50%, transparent 66%); z-index: -1; }
+.about-visual-grid { position: absolute; inset: -20%; background: repeating-linear-gradient(115deg, transparent 0 26px, rgba(255,255,255,.055) 26px 27px); transform: rotate(-7deg); }
+.about-visual-orbit { position: absolute; left: 50%; top: 50%; border: 1px solid rgba(255,255,255,.24); border-radius: 50%; transform: translate(-50%,-50%) rotate(-25deg); }
+.about-visual-orbit-one { width: 74%; height: 42%; box-shadow: 0 0 32px rgba(255,36,54,.18); }
+.about-visual-orbit-two { width: 48%; height: 82%; border-color: rgba(255,36,54,.62); }
+.about-visual-logo { position: absolute; left: 50%; top: 50%; width: 43%; height: 66%; object-fit: contain; transform: translate(-50%,-50%); filter: brightness(0) saturate(100%) invert(17%) sepia(97%) saturate(4984%) hue-rotate(344deg) brightness(101%) contrast(105%) drop-shadow(0 0 20px rgba(255,36,54,.4)); }
+.about-visual-label { position: absolute; color: rgba(255,255,255,.68); font: 11px 'JetBrains Mono',monospace; letter-spacing: .1em; }
+.about-visual-label { left: 26px; bottom: 24px; }
+.about-copy h2 { max-width: 620px; margin: 16px 0 20px; font-size: clamp(31px, 4vw, 48px); line-height: 1.04; font-weight: 800; letter-spacing: -.04em; }
+.about-copy p { max-width: 580px; color: var(--grey); margin-bottom: 14px; font-size: 15px; }
+.about-copy .about-lead { color: var(--ink); font-size: 18px; line-height: 1.55; }
+.about-points { display: grid; gap: 11px; margin: 28px 0 30px; }
+.about-points > div { display: flex; gap: 16px; align-items: baseline; border-top: 1px solid var(--line); padding-top: 11px; font-size: 14px; }
+.about-points strong { color: var(--red); font: 12px 'JetBrains Mono',monospace; }
+.about-points span { color: var(--ink); }
+.about-cta { background: var(--ink); border-color: var(--ink); }
+.about-cta:hover { background: var(--red); border-color: var(--red); }
 
+@keyframes about-light-sweep {
+  0%, 24% { left: -30%; opacity: 0; }
+  34% { opacity: 1; }
+  66% { opacity: .72; }
+  78%, 100% { left: 112%; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-visual::before { animation: none; opacity: 0; }
+  .about-visual, .about-copy { opacity: 1; transform: none; transition: none; }
+}
+
+@media(max-width:760px) {
+  .about { gap: 42px; }
+  .about-visual { min-height: 330px; }
+}
