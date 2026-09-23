@@ -331,6 +331,21 @@ html.process-modal-open { overflow: hidden; }
   }
   .process-step:nth-child(5) .process-connector svg { display: none; }
   .process-step:nth-child(5) .process-connector-horizontal { display: block; }
+
+  .process-step:not(:last-child) .process-connector {
+    z-index: 3;
+    display: block !important;
+    visibility: visible !important;
+    overflow: visible;
+    color: rgba(255, 255, 255, 0.44);
+  }
+  .process-step:not(:last-child) .process-connector svg { display: none !important; visibility: visible !important; opacity: 1 !important; }
+  .process-step:nth-child(1) .process-connector-horizontal,
+  .process-step:nth-child(3) .process-connector-horizontal,
+  .process-step:nth-child(5) .process-connector-horizontal { display: block !important; }
+  .process-step:nth-child(2) .process-connector-vertical,
+  .process-step:nth-child(4) .process-connector-vertical { display: block !important; }
+  .process-step:not(:last-child) .process-connector path { vector-effect: non-scaling-stroke; }
 }
 
 @media (max-width: 760px) {
@@ -354,15 +369,29 @@ html.process-modal-open { overflow: hidden; }
     top: 100%;
     right: auto;
     left: 50%;
-    width: 24px;
+    z-index: 3;
+    width: 28px;
     height: var(--process-row-gap);
     transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.48);
   }
-  .process-step:not(:last-child) .process-connector svg { display: none; }
-  .process-step:not(:last-child) .process-connector-vertical { display: block; }
+  .process-step:not(:last-child) .process-connector-horizontal { display: none !important; }
+  .process-step:not(:last-child) .process-connector-vertical { display: block !important; }
+  .process-step:not(:last-child) .process-connector-vertical path { vector-effect: non-scaling-stroke; }
   .process-modal-panel { padding: 50px 24px 28px; }
   .process-modal .process-modal-contact { display: block; text-align: center; }
 }
+
+/* A malha externa mantém a geometria; somente a superfície visual flutua. */
+.process-connection-layer { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.process-connection-layer path { fill: none; stroke: rgba(255,255,255,.38); stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.35; vector-effect: non-scaling-stroke; }
+.process-connection-layer .process-connection-arrow { stroke-width: 1.65; }
+.process-step { z-index: 1; padding: 0; border: 0; background: transparent; box-shadow: none; cursor: default; }
+.process-step-surface { display: flex; box-sizing: border-box; width: 100%; height: 100%; flex-direction: column; align-items: flex-start; padding: 22px; border: 1px solid rgba(255,255,255,.14); border-radius: 14px; background: #1a1a1d; color: #fff; box-shadow: 0 16px 34px rgba(0,0,0,.22); transition: border-color 180ms ease, box-shadow 180ms ease; }
+.process-step:focus-within { outline: none; }.process-step:focus-within .process-step-surface { outline: 2px solid var(--red-bright); outline-offset: 4px; }
+@media (hover:hover) and (pointer:fine) { .process-step:hover .process-step-surface { border-color: rgba(255,255,255,.3); box-shadow: 0 22px 42px rgba(0,0,0,.32); } }
+@media (prefers-reduced-motion:no-preference) { .process-flow.is-visible .process-step.is-revealed { animation: none; }.process-flow.is-visible .process-step.is-revealed .process-step-surface { animation: process-card-float var(--float-duration,6.5s) ease-in-out infinite; animation-delay: var(--float-delay,.45s); } }
+@media (max-width:760px) { .process-step:nth-child(n) { padding: 0; }.process-step-surface { padding: 20px; }.process-connection-layer path { stroke: rgba(255,255,255,.48); } }
 
 @media (prefers-reduced-motion: reduce) {
   .process-step { transform: none !important; }
