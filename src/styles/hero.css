@@ -10,7 +10,7 @@
   isolation: isolate;
 }
 
-/* Malha fina atrás da logo, em vermelho — mesma linguagem do .speedline. */
+/* Malha fina atrás da logo, em vermelho. */
 .hero-mesh {
   position: absolute;
   inset: 0;
@@ -42,7 +42,6 @@
 ========================= */
 
 .hero .eyebrow { color: #ff6b76; }
-.hero .eyebrow::before { background: #ff6b76; }
 
 .hero h1 {
   font-size: clamp(34px, 3.8vw, 54px);
@@ -281,16 +280,6 @@
   padding: 20px 20px 40px 0;
   border-right: 1px solid rgba(255, 255, 255, .14);
   position: relative;
-}
-
-.stat::before {
-  content: "";
-  position: absolute;
-  top: -1px;
-  left: 0;
-  width: 34px;
-  height: 2px;
-  background: var(--red-bright);
 }
 
 .stat:last-child { border-right: none; }

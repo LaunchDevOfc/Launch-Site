@@ -3,7 +3,6 @@
   .contact::before{content:""; position:absolute; top:-40%; left:-10%; width:50%; height:180%; background:var(--red); opacity:.12; transform:skewX(-14deg);}
   .contact .wrap{position:relative; z-index:2;}
   .contact .eyebrow{color:#ff6b76;}
-  .contact .eyebrow::before{background:#ff6b76;}
 
 
 /* Container que envolve os dois sections */

@@ -27,21 +27,10 @@
     letter-spacing:0.14em;
     text-transform:uppercase;
     color:var(--red);
-    display:flex;align-items:center;gap:10px;
+    display:block;
   }
-  .eyebrow::before{content:"";width:20px;height:1px;background:var(--red);}
   .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
   a{color:inherit;text-decoration:none;}
-
-  .speedline{
-    height:14px;
-    width:100%;
-    background:repeating-linear-gradient(90deg, var(--line) 0px, var(--line) 1px, transparent 1px, transparent 8px);
-    position:relative;
-    opacity:.9;
-  }
-
-  .speedline::after{content:"";position:absolute; left:0; top:6px; height:1px; width:100%; background:var(--line);}
 
   header{
     position:sticky; top:0; z-index:50;
