@@ -115,24 +115,24 @@
 }
 
 .process-step-open {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  border: 0;
-  border-radius: inherit;
-  background: transparent;
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 9px 14px;
+  border-radius: 3px;
+  font-size: 13px;
+  line-height: 1.25;
   cursor: pointer;
 }
 
-.process-step:focus-within { outline: 2px solid #ff7884; outline-offset: 4px; }
-.process-step-open:focus-visible { outline: none; }
+.process-step-open span { margin-left: 6px; }
+.process-step:focus-within { outline: 2px solid var(--red-bright); outline-offset: 4px; }
 
 .process-connector {
   position: absolute;
   z-index: 2;
   display: block;
   pointer-events: none;
-  color: #ff5f6f;
+  color: rgba(255, 255, 255, 0.3);
 }
 
 .process-connector svg {
@@ -144,7 +144,11 @@
   stroke: currentColor;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-width: 2.5;
+  stroke-width: 1.35;
+}
+
+.process-connector-direction {
+  stroke-width: 1.65;
 }
 
 .process-step:nth-child(1) .process-connector,
@@ -186,7 +190,27 @@
     border-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 22px 42px rgba(0, 0, 0, 0.32);
   }
-  .process-step:hover .process-step-hint { color: #fff; }
+  .process-step-open:hover { transform: translateY(-1px); }
+}
+
+@keyframes process-card-float {
+  0%, 100% { translate: 0 0; }
+  30% { translate: var(--float-x, 1px) -2.5px; }
+  64% { translate: var(--float-x-return, -.65px) -1px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .process-flow.is-visible .process-step.is-revealed {
+    animation: process-card-float var(--float-duration, 6.5s) ease-in-out infinite;
+    animation-delay: var(--float-delay, 0.45s);
+  }
+
+  .process-flow.is-visible .process-step:nth-child(1) { --float-duration: 6.7s; --float-delay: 0.45s; --float-x: 1px; --float-x-return: -.65px; }
+  .process-flow.is-visible .process-step:nth-child(2) { --float-duration: 7.2s; --float-delay: 0.55s; --float-x: -1.2px; --float-x-return: .8px; }
+  .process-flow.is-visible .process-step:nth-child(3) { --float-duration: 6.2s; --float-delay: 0.4s; --float-x: .8px; --float-x-return: -.5px; }
+  .process-flow.is-visible .process-step:nth-child(4) { --float-duration: 7.5s; --float-delay: 0.6s; --float-x: -1px; --float-x-return: .65px; }
+  .process-flow.is-visible .process-step:nth-child(5) { --float-duration: 6.4s; --float-delay: 0.5s; --float-x: 1.15px; --float-x-return: -.75px; }
+  .process-flow.is-visible .process-step:nth-child(6) { --float-duration: 7s; --float-delay: 0.35s; --float-x: -.75px; --float-x-return: .5px; }
 }
 
 html.process-modal-open { overflow: hidden; }
