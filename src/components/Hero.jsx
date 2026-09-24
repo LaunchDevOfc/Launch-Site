@@ -1,4 +1,5 @@
 import HeroLogo from './HeroLogo.jsx';
+import ContactLink from './ContactLink.jsx';
 
 const stats = [
   { value: '10', label: 'Tipos de serviço' },
@@ -26,9 +27,9 @@ export default function Hero() {
               suporte depois de publicado.
             </p>
             <div className="hero-cta">
-              <a href="#contato" className="btn hero-btn">
+              <ContactLink className="btn hero-btn" subject="falar-projeto">
                 Solicitar orçamento
-              </a>
+              </ContactLink>
               <a href="#servicos" className="hero-link">
                 Ver serviços <span aria-hidden="true">→</span>
               </a>

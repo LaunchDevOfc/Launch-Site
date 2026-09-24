@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { useInView } from '../hooks/useInView.js';
 import '../styles/operations-comparison.css';
+import ContactLink from './ContactLink.jsx';
 
 const transformations = [
   ['Processos manuais', 'Processos automatizados'],
@@ -53,7 +54,7 @@ export default function OperationsComparison() {
   };
 
   return <section className="section operations-comparison-section" id="transformacao" ref={comparisonRef}><div className="wrap operations-comparison-layout">
-    <motion.div className="operations-comparison-head" initial={{ opacity: 0, y: 14 }} animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }} transition={{ duration: .45, ease: [.16, 1, .3, 1] }}><div className="eyebrow">Na operação</div><h2>Menos trabalho manual. Mais controle da operação.</h2><p>Uma solução feita para a sua rotina transforma esforço repetitivo em processos que trabalham a favor do negócio.</p><a className="btn operations-comparison-cta" href="#contato">Falar sobre o projeto <span aria-hidden="true">→</span></a></motion.div>
+    <motion.div className="operations-comparison-head" initial={{ opacity: 0, y: 14 }} animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }} transition={{ duration: .45, ease: [.16, 1, .3, 1] }}><div className="eyebrow">Na operação</div><h2>Menos trabalho manual. Mais controle da operação.</h2><p>Uma solução feita para a sua rotina transforma esforço repetitivo em processos que trabalham a favor do negócio.</p><ContactLink className="btn operations-comparison-cta" subject="falar-projeto">Falar sobre o projeto <span aria-hidden="true">→</span></ContactLink></motion.div>
     <motion.div className="operations-comparison" initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }} transition={{ duration: .55, delay: .08, ease: [.16, 1, .3, 1] }}>
       <div className={`comparison-surface${dragging ? ' is-dragging' : ''}`} ref={surfaceRef}>
         <TransformationState after />

@@ -1,3 +1,29 @@
-/* Rodapé. */
-  footer{padding:36px 0; display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--grey); flex-wrap:wrap; gap:12px;}
+/* Rodapé compacto. */
+.site-footer { padding: 42px 0 24px; border-top: 1px solid rgba(255,255,255,.11); background: #080809; color: #fff; }
+.site-footer-main { display: flex; align-items: center; justify-content: space-between; gap: 36px; padding-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,.11); }
+.site-footer-logo { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 10px; color: #fff; }
+.site-footer-logo img { display: block; width: 42px; height: 42px; object-fit: contain; transition: transform 180ms ease; }
+.site-footer-logo span { font-family: 'Space Grotesk',sans-serif; font-size: 14px; font-weight: 800; letter-spacing: .14em; }
+.site-footer-logo:hover img { transform: translateY(-2px); }
+.site-footer-nav { display: flex; align-items: center; justify-content: flex-end; gap: clamp(22px,3.4vw,42px); }
+.site-footer-nav a { position: relative; padding: 8px 0; color: rgba(255,255,255,.66); font-size: 13px; font-weight: 500; transition: color 180ms ease; }
+.site-footer-nav a::after { content: ''; position: absolute; right: 0; bottom: 3px; left: 0; height: 1px; background: var(--red-bright); transform: scaleX(0); transform-origin: right; transition: transform 200ms ease; }
+.site-footer-nav a:hover { color: #fff; }
+.site-footer-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+.site-footer a:focus-visible { outline: 2px solid var(--red-bright); outline-offset: 4px; }
+.site-footer-bottom { padding-top: 20px; color: rgba(255,255,255,.38); font-size: 11px; }
 
+@media (max-width: 640px) {
+  .site-footer { padding: 36px 0 22px; }
+  .site-footer .wrap { padding: 0 20px; }
+  .site-footer-main { align-items: flex-start; flex-direction: column; gap: 23px; padding-bottom: 25px; }
+  .site-footer-nav { justify-content: flex-start; flex-wrap: wrap; gap: 8px 25px; }
+  .site-footer-nav a { min-height: 38px; display: inline-flex; align-items: center; }
+  .site-footer-bottom { padding-top: 18px; line-height: 1.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-footer-logo img,
+  .site-footer-nav a,
+  .site-footer-nav a::after { transition: none; }
+}

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import ContactLink from './ContactLink.jsx';
 
 // Convite que o sino do header abre. Fica controlado pelo pai: `open` manda o
 // <dialog> abrir/fechar, `onSyncClose` devolve o estado quando o Esc fecha sozinho.
@@ -33,9 +34,9 @@ export default function ContactInvite({ open, onDismiss, onSyncClose }) {
         Conte sua ideia à equipe Launch. Vamos entender o que você precisa e, se fizer sentido, marcar uma reunião
         para pensar nos próximos passos.
       </p>
-      <a className="btn contact-invite-action" href="#contato" onClick={onDismiss}>
+      <ContactLink className="btn contact-invite-action" subject="falar-projeto" onClick={onDismiss}>
         Falar com a equipe <span aria-hidden="true">↗</span>
-      </a>
+      </ContactLink>
     </dialog>
   );
 }

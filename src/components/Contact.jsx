@@ -1,106 +1,45 @@
 import ContactForm from './ContactForm.jsx';
 
-const iconProps = { width: 18, height: 18, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2 };
+const iconProps = { width: 20, height: 20, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true };
 
-const benefits = [
+const principles = [
   {
-    text: 'Demonstração de 30 minutos, direto ao ponto',
-    icon: (
-      <svg {...iconProps}>
-        <circle cx="12" cy="12" r="9" />
-        <path d="M12 7v5l3 2" />
-      </svg>
-    )
+    title: 'Solução pensada para o negócio',
+    text: 'A tecnologia parte do problema real, não de um pacote pronto.',
+    icon: <svg {...iconProps}><path d="M12 3 4.5 7.2v9.6L12 21l7.5-4.2V7.2L12 3Z" /><path d="m8.5 12 2.2 2.2 4.8-5" /></svg>
   },
   {
-    text: 'Focada na operação da sua agência',
-    icon: (
-      <svg {...iconProps}>
-        <rect x="4" y="5" width="16" height="15" rx="2" />
-        <path d="M8 3v4" />
-        <path d="M16 3v4" />
-        <path d="M4 10h16" />
-      </svg>
-    )
+    title: 'Contato direto durante o projeto',
+    text: 'Decisões e próximos passos explicados com clareza.',
+    icon: <svg {...iconProps}><path d="M7 18.5 3.5 21l1-4.3A8 8 0 1 1 7 18.5Z" /><path d="M8 11h8M8 14h5" /></svg>
   },
   {
-    text: 'Sem compromisso e sem cartão de crédito',
-    icon: (
-      <svg {...iconProps}>
-        <path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3z" />
-        <path d="M9 12l2 2 4-4" />
-      </svg>
-    )
-  }
-];
-
-const stats = [
-  {
-    value: '500+',
-    label: 'Agências organizadas',
-    icon: (
-      <svg {...iconProps}>
-        <path d="M4 21V10l4-3v14" />
-        <path d="M8 21V4h8v17" />
-        <path d="M16 21v-8l4-2v10" />
-        <path d="M2 21h20" />
-      </svg>
-    )
-  },
-  {
-    value: '4.9',
-    label: 'Nota de satisfação',
-    icon: (
-      <svg {...iconProps}>
-        <path d="M12 2l3 6 6 .9-4.5 4.4 1 6.2L12 16.5 6.5 19.5l1-6.2L3 8.9 9 8z" />
-      </svg>
-    )
+    title: 'Da ideia à entrega',
+    text: 'Estratégia, construção e evolução no mesmo caminho.',
+    icon: <svg {...iconProps}><path d="M5 19 19 5M9 5h10v10" /><path d="M5 9v10h10" /></svg>
   }
 ];
 
 export default function Contact() {
   return (
     <section className="contact" id="contato" aria-labelledby="contact-title">
-      <div className="wrap demo-container">
-        <section className="content">
-          <div className="badge">
-            <span />
-            DEMONSTRAÇÃO GUIADA
-          </div>
-
-          <h2 id="contact-title">
-            Veja o Launch
-            <br />
-            rodando na <strong>sua operação.</strong>
-          </h2>
-
-          <p className="description">
-            Agende uma demonstração e mostramos como centralizar clientes, projetos, aprovações e entregas em um
-            único lugar.
+      <div className="wrap contact-layout">
+        <header className="contact-copy">
+          <div className="eyebrow">Seu próximo projeto</div>
+          <h2 id="contact-title">Vamos transformar sua ideia em uma solução que funciona.</h2>
+          <p className="contact-description">
+            A Launch desenvolve software sob medida e soluções digitais para empresas — de sistemas personalizados e
+            automações com IA a landing pages, dashboards e novos produtos digitais.
           </p>
-
-          <div className="benefits">
-            {benefits.map((benefit) => (
-              <div className="benefit" key={benefit.text}>
-                <div className="icon">{benefit.icon}</div>
-                <span>{benefit.text}</span>
+          <div className="contact-principles">
+            {principles.map((principle) => (
+              <div className="contact-principle" key={principle.title}>
+                <span className="contact-principle-icon">{principle.icon}</span>
+                <span><strong>{principle.title}</strong><small>{principle.text}</small></span>
               </div>
             ))}
           </div>
-
-          <div className="stats">
-            {stats.map((stat) => (
-              <div className="stat" key={stat.label}>
-                <div className="stat-icon">{stat.icon}</div>
-                <div>
-                  <strong>{stat.value}</strong>
-                  <span>{stat.label}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
+        </header>
         <ContactForm />
       </div>
     </section>

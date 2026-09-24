@@ -1,6 +1,6 @@
 import { useFlipDialog } from '../hooks/useFlipDialog.js';
-import { scrollToContactForm } from '../lib/motion.js';
 import { processIcons } from './icons/ProcessIcons.jsx';
+import ContactLink from './ContactLink.jsx';
 
 export default function ProcessModal({ active, onClose }) {
   const step = active?.item ?? null;
@@ -51,17 +51,13 @@ export default function ProcessModal({ active, onClose }) {
               ))}
             </ul>
           </div>
-          <a
+          <ContactLink
             className="btn process-modal-contact"
-            href="#contato"
-            onClick={(event) => {
-              event.preventDefault();
-              requestClose(true);
-              requestAnimationFrame(scrollToContactForm);
-            }}
+            subject="falar-projeto"
+            onClick={() => requestClose(true)}
           >
             Conversar sobre meu projeto <span aria-hidden="true">↗</span>
-          </a>
+          </ContactLink>
         </div>
       )}
     </dialog>

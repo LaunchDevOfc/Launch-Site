@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import ContactInvite from './ContactInvite.jsx';
 import logoHeader from '../assets/logo-header.svg';
+import ContactLink from './ContactLink.jsx';
 
 const navLinks = [
   { href: '#servicos', label: 'Serviços' },
@@ -37,16 +38,16 @@ export default function SiteHeader() {
             <img src={logoHeader} alt="" width="48" height="48" />
           </a>
           <div className={`navlinks${menuOpen ? ' open' : ''}`} id="header-links">
-            {navLinks.map((link) => (
-              <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
-                {link.label}
-              </a>
+            {navLinks.map((link) => link.href === '#contato' ? (
+              <ContactLink key={link.href} onClick={() => setMenuOpen(false)}>{link.label}</ContactLink>
+            ) : (
+              <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>{link.label}</a>
             ))}
           </div>
           <div className="nav-actions">
-            <a href="#contato" className="btn nav-contact">
+            <ContactLink className="btn nav-contact" subject="falar-projeto">
               Vamos conversar
-            </a>
+            </ContactLink>
             <button
               className={`nav-toggle${menuOpen ? ' active' : ''}`}
               type="button"

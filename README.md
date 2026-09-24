@@ -60,6 +60,11 @@ caminho, e o foco volta para o botão de origem.
   arquivos não estiverem lá (`landing-pages.jpg`, `chatbots.jpg`, ... com os
   nomes que estão em `src/data/services.js`), cada card cai no gradiente de
   placeholder.
-- **Formulário de contato**: `ContactForm` já controla os campos, mas o `submit`
-  apenas evita o reload e loga os dados. Falta apontar para o backend ou serviço
-  de e-mail.
+
+## Envio do formulário de contato
+
+O endpoint serverless `api/contact.js` envia as mensagens pelo Resend. Configure
+`RESEND_API_KEY`, `CONTACT_TO_EMAIL` e `CONTACT_FROM_EMAIL` no ambiente da
+hospedagem, conforme o modelo em `.env.example`. O remetente precisa pertencer a
+um domínio verificado no Resend. A rota funciona em hospedagens compatíveis com
+funções serverless da Vercel; para testar a API localmente, use `vercel dev`.

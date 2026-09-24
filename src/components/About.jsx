@@ -1,4 +1,5 @@
 import { useInView } from '../hooks/useInView.js';
+import ContactLink from './ContactLink.jsx';
 
 export default function About() {
   const [sectionRef, isVisible] = useInView({ rootMargin: '-80px' });
@@ -22,7 +23,7 @@ export default function About() {
           <div><strong>02</strong><span>Decisões técnicas explicadas com clareza.</span></div>
           <div><strong>03</strong><span>Suporte para o produto continuar evoluindo.</span></div>
         </div>
-        <a className="btn about-cta" href="#contato">Conhecer nosso jeito de trabalhar <span aria-hidden="true">→</span></a>
+        <ContactLink className="btn about-cta" subject="falar-projeto">Conhecer nosso jeito de trabalhar <span aria-hidden="true">→</span></ContactLink>
       </div>
     </div>
   </section>;

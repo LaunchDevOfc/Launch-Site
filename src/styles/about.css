@@ -1,6 +1,7 @@
 /* Quem somos. */
 .about-section { background: var(--paper-2); border-top: 1px solid var(--line); }
 .about { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); gap: clamp(42px, 7vw, 96px); align-items: center; }
+.about > * { min-width: 0; }
 .about-visual, .about-copy { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .8s cubic-bezier(.16,1,.3,1); }
 .about-copy { transition-delay: .12s; }
 .about-section.is-visible .about-visual, .about-section.is-visible .about-copy { opacity: 1; transform: none; }
@@ -36,7 +37,30 @@
   .about-visual, .about-copy { opacity: 1; transform: none; transition: none; }
 }
 
-@media(max-width:760px) {
-  .about { gap: 42px; }
-  .about-visual { min-height: 330px; }
+@media (max-width: 1100px) {
+  .about { gap: clamp(36px, 5vw, 64px); }
+}
+
+@media (max-width: 1100px) {
+  .about {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(40px, 6vw, 52px);
+  }
+
+  .about-visual {
+    width: min(100%, 600px);
+    min-height: clamp(320px, 52vw, 420px);
+  }
+
+  .about-copy h2,
+  .about-copy p { max-width: 620px; }
+}
+
+@media (max-width: 560px) {
+  .about-section { padding: 76px 0; }
+  .about { gap: 38px; }
+  .about-visual { min-height: 300px; }
+  .about-visual-label { left: 20px; bottom: 18px; font-size: 10px; }
+  .about-copy .about-lead { font-size: 17px; }
+  .about-points { margin: 24px 0 28px; }
 }
