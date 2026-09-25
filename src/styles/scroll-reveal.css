@@ -1,0 +1,17 @@
+/* Only JavaScript-prepared groups start hidden. No wrappers or layout changes. */
+[data-reveal-pending] {
+  opacity: 0;
+  transform: translateY(22px);
+}
+
+@media (max-width: 760px) {
+  [data-reveal-pending] { transform: translateY(14px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal-pending] { opacity: 1; transform: none; }
+}
+
+@media print {
+  [data-reveal-pending] { opacity: 1; transform: none; }
+}

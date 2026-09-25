@@ -160,7 +160,7 @@ export default function Process() {
   return (
     <section className="section theme-light" id="processo">
       <div className="wrap">
-        <div className="section-head">
+        <div className="section-head" data-reveal>
           <div>
             <div className="eyebrow">Na prática</div>
             <h2 className="section-title">O que acontece depois que você entra em contato.</h2>

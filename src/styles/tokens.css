@@ -1,0 +1,86 @@
+/* Launch: fonte de verdade visual. O vermelho original é preservado. */
+:root {
+  --red: #D2001C;
+  --red-deep: #8E0013;
+  --red-bright: #FF2436;
+  --action: var(--red);
+  --action-hover: #B60018;
+  --action-active: var(--red-deep);
+  --accent-on-dark: #FF7784;
+  --action-soft: rgb(210 0 28 / 7%);
+  --action-soft-dark: rgb(210 0 28 / 14%);
+
+  --background-dark: #0C0C0E;
+  --background-dark-secondary: #121214;
+  --surface-dark: #1B1B1F;
+  --surface-dark-elevated: #242429;
+  --text-dark-primary: #F5F5F6;
+  --text-dark-secondary: #B8B8C0;
+  --text-dark-muted: #9898A3;
+  --border-dark: #38383F;
+  --border-dark-hover: #61616D;
+  --field-border-dark: #73737F;
+
+  --background-light: #F7F6F4;
+  --surface-light: #FFFFFF;
+  --text-light-primary: #1A1A1E;
+  --text-light-secondary: #5D5D67;
+  --text-light-muted: #6B6B75;
+  --border-light: #DDDDE1;
+  --border-light-hover: #85858F;
+  --on-action: #FFFFFF;
+  --success: #92DFAD;
+  --error: #FF929C;
+  --overlay: rgb(12 12 14 / 72%);
+  --header-glass: rgb(255 255 255 / 96%);
+  --focus-ring: var(--red);
+
+  /* Compatibilidade com os nomes já usados nas seções claras. */
+  --ink: var(--text-light-primary);
+  --grey: var(--text-light-secondary);
+  --line: var(--border-light);
+  --paper: var(--surface-light);
+  --paper-2: var(--background-light);
+
+  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-label: 'JetBrains Mono', monospace;
+  --text-section-title: clamp(32px, 3.4vw, 44px);
+  --text-card-title: 20px;
+  --text-body: 15px;
+  --text-small: 13px;
+  --text-label: 11px;
+  --heading-leading: 1.08;
+  --heading-tracking: -.035em;
+  --body-leading: 1.65;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --section-space: clamp(72px, 7.5vw, 104px);
+  --section-heading-gap: clamp(32px, 4vw, 48px);
+  --container-width: 1120px;
+  --container-gutter: 32px;
+
+  --radius-control: 6px;
+  --radius-card: 12px;
+  --radius-dialog: 16px;
+  --radius-round: 50%;
+  --shadow-card: 0 8px 24px rgb(0 0 0 / 14%);
+  --shadow-overlay: 0 18px 48px rgb(0 0 0 / 24%);
+  --shadow-header: 0 8px 24px rgb(0 0 0 / 10%);
+  --duration-interaction: 180ms;
+  --ease-interaction: cubic-bezier(.22, 1, .36, 1);
+  --control-height: 44px;
+  --control-height-large: 48px;
+}
+
+@media (max-width: 650px) {
+  :root { --container-gutter: 20px; }
+}

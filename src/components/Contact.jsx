@@ -24,7 +24,7 @@ export default function Contact() {
   return (
     <section className="contact" id="contato" aria-labelledby="contact-title">
       <div className="wrap contact-layout">
-        <header className="contact-copy">
+        <header className="contact-copy" data-reveal>
           <div className="eyebrow">Seu próximo projeto</div>
           <h2 className="section-title" id="contact-title">Vamos transformar sua ideia em uma solução que funciona.</h2>
           <p className="contact-description">

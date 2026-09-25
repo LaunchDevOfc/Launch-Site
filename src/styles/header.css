@@ -1,9 +1,12 @@
 /* Header: estrutura e comportamento originais do projeto, em versão preta. */
-.site-header { background: rgba(5, 5, 6, .96); border-bottom: 1px solid rgba(255, 255, 255, .08); transition: background .35s, border-color .35s; }
-.site-header .nav { min-height: 88px; gap: 28px; transition: min-height .35s, padding .35s, background .35s, border-radius .35s, box-shadow .35s; }
+.site-header { height: 91px; background: rgba(5, 5, 6, .96); border-bottom: 1px solid rgba(255, 255, 255, .08); transition: background .35s, border-color .35s; }
+.site-header .nav { position: relative; isolation: isolate; min-height: 88px; gap: 28px; }
+.nav-surface { position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0; border: 1px solid rgba(255, 255, 255, .1); border-radius: 18px; background: rgba(14, 14, 16, .96); box-shadow: 0 14px 42px rgba(0, 0, 0, .5); transition: opacity .35s; }
+.site-header .nav-surface, .site-header .logo, .site-header .navlinks, .site-header .nav-actions { transform-origin: top left; }
 .site-header.is-scrolled { background: transparent; border-color: transparent; }
-.site-header.is-scrolled .nav { min-height: 64px; max-width: 1060px; margin: 10px auto 0; padding: 8px 20px; background: rgba(14, 14, 16, .96); border: 1px solid rgba(255, 255, 255, .1); border-radius: 18px; box-shadow: 0 14px 42px rgba(0, 0, 0, .5); }
-.site-header .logo { flex: none; width: 50px; height: 50px; transition: width .35s, height .35s; }
+.site-header.is-scrolled .nav { min-height: 64px; max-width: 1060px; margin: 10px auto 0; padding: 8px 20px; border: 1px solid transparent; border-radius: 18px; }
+.site-header.is-scrolled .nav-surface { inset: -1px; opacity: 1; }
+.site-header .logo { flex: none; width: 50px; height: 50px; }
 .site-header .logo img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .site-header.is-scrolled .logo { width: 42px; height: 42px; border-radius: 11px; }
 .site-header .navlinks { margin-left: auto; align-items: center; gap: clamp(16px, 2.8vw, 36px); }
@@ -33,6 +36,7 @@
 
 @media (max-width: 900px) { .site-header .nav { gap: 16px } .site-header .navlinks { gap: 16px } .nav-actions { gap: 9px } .nav-contact { padding: 10px 12px; font-size: 12px } }
 @media (max-width: 760px) {
+  .site-header { height: 75px; }
   .site-header .nav { min-height: 74px; padding: 12px 22px; }
   .site-header.is-scrolled .nav { margin: 8px 12px 0; padding: 7px 12px; min-height: 60px; }
   .site-header .navlinks { top: calc(100% + 8px); left: 12px; right: 12px; margin: 0; padding: 8px; border: 1px solid rgba(255, 255, 255, .1); border-radius: 14px; background: #111113; box-shadow: 0 16px 35px rgba(0, 0, 0, .5); }

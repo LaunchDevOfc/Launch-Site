@@ -50,8 +50,12 @@ export function useFlipDialog({ active, onClose, htmlClass, openDuration = 360 }
     }
   }, [active, htmlClass, openDuration, originTransform]);
 
-  // Segurança: se o componente sair do ar com o modal aberto, o scroll volta.
-  useEffect(() => () => document.documentElement.classList.remove(htmlClass), [htmlClass]);
+  // Cancel the animation as well as the lock when unmounting.
+  useEffect(() => () => {
+    animationRef.current?.cancel();
+    animationRef.current = null;
+    document.documentElement.classList.remove(htmlClass);
+  }, [htmlClass]);
 
   const finishClose = useCallback(() => {
     const dialog = dialogRef.current;

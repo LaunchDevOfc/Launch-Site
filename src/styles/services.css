@@ -1,8 +1,19 @@
 /* Serviços: seletor à esquerda, painel de detalhe à direita. */
-.services-section { background: var(--bg); }
+.services-section { position: relative; background: var(--bg); }
+/* Hero e Serviços compartilham o fundo: delimitar apenas esta transição,
+   sem ocupar espaço ou animar junto com o conteúdo. */
+.services-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  inset-inline: var(--gutter);
+  max-width: calc(1120px - 2 * var(--gutter));
+  height: 1px;
+  margin-inline: auto;
+  background: var(--border-subtle);
+  pointer-events: none;
+}
 .services-section .section-head p { color: var(--text-3); }
-.services-gallery-wrap { opacity: 0; transform: translateY(16px); transition: opacity .55s ease, transform .7s var(--ease-out); }
-.services-gallery-wrap.is-visible { opacity: 1; transform: none; }
 
 .service-showcase { display: grid; grid-template-columns: minmax(250px, .43fr) minmax(0, 1fr); gap: clamp(46px, 7vw, 96px); align-items: start; }
 .service-showcase-nav { display: grid; gap: 3px; padding: 10px 0; }

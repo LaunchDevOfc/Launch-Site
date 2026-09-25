@@ -9,11 +9,31 @@ export function usePauseOffscreen(selectors) {
   useEffect(() => {
     if (!('IntersectionObserver' in window)) return undefined;
     const nodes = selectors.flatMap((selector) => [...document.querySelectorAll(selector)]);
+    const visible = new Map(nodes.map((node) => [node, true]));
+    // Observe only the existing dialogs' open attribute, not the page subtree.
+    // A still background can be reused by the modal's backdrop blur.
+    const dialogs = [...document.querySelectorAll('dialog')];
+    const refresh = () => {
+      const covered = document.hidden || dialogs.some((dialog) => dialog.open);
+      nodes.forEach((node) => node.classList.toggle('is-paused', covered || !visible.get(node)));
+    };
     const observer = new IntersectionObserver(
-      (entries) => entries.forEach((entry) => entry.target.classList.toggle('is-paused', !entry.isIntersecting)),
+      (entries) => {
+        entries.forEach((entry) => visible.set(entry.target, entry.isIntersecting));
+        refresh();
+      },
       { rootMargin: '100px' }
     );
+    const dialogObserver = new MutationObserver(refresh);
+    dialogs.forEach((dialog) => dialogObserver.observe(dialog, { attributes: true, attributeFilter: ['open'] }));
+    document.addEventListener('visibilitychange', refresh);
     nodes.forEach((node) => observer.observe(node));
-    return () => observer.disconnect();
+    refresh();
+    return () => {
+      observer.disconnect();
+      dialogObserver.disconnect();
+      document.removeEventListener('visibilitychange', refresh);
+      nodes.forEach((node) => node.classList.remove('is-paused'));
+    };
   }, [selectors]);
 }

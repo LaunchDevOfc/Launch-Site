@@ -96,7 +96,7 @@ export default function ContactForm() {
   const errorFor = (field) => touched[field] && errors[field];
 
   return (
-    <div className="contact-form-card">
+    <div className="contact-form-card" data-reveal data-reveal-delay="60">
       <div className="contact-form-head">
         <span>Conte o que você precisa</span>
         <h3>Fale com a equipe Launch</h3>

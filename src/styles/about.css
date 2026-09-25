@@ -1,10 +1,9 @@
 /* Quem somos. */
-.about-section { background: var(--bg); }
+/* A mudança de superfície encerra Resultados sem adicionar outro divisor.
+   Só o fundo externo muda; os tokens e elementos internos são preservados. */
+.about-section { background: var(--surface); }
 .about { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); gap: clamp(42px, 7vw, 96px); align-items: center; }
 .about > * { min-width: 0; }
-.about-visual, .about-copy { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .8s var(--ease-out); }
-.about-copy { transition-delay: .12s; }
-.about-section.is-visible .about-visual, .about-section.is-visible .about-copy { opacity: 1; transform: none; }
 
 /* Ilustração do Quem Somos: visual original do projeto, mantido de propósito.
    A luz que atravessa anima só transform (mais leve que animar `left`). */

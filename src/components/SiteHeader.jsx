@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useCompactHeader } from '../hooks/useCompactHeader.js';
 import ContactInvite from './ContactInvite.jsx';
 import logoHeader from '../assets/logo-header.svg';
 import ContactLink from './ContactLink.jsx';
@@ -11,19 +12,11 @@ const navLinks = [
 ];
 
 export default function SiteHeader() {
-  const [scrolled, setScrolled] = useState(false);
+  const headerRef = useCompactHeader();
   const [menuOpen, setMenuOpen] = useState(false);
   const [inviteOpen, setInviteOpen] = useState(false);
   const [bellRead, setBellRead] = useState(false);
   const [badgeVisible, setBadgeVisible] = useState(true);
-
-  // Depois de 36px de rolagem o header vira uma pílula flutuante.
-  useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 36);
-    update();
-    window.addEventListener('scroll', update, { passive: true });
-    return () => window.removeEventListener('scroll', update);
-  }, []);
 
   function dismissInvite() {
     setBadgeVisible(false);
@@ -32,8 +25,9 @@ export default function SiteHeader() {
 
   return (
     <>
-      <header className={`site-header${scrolled ? ' is-scrolled' : ''}`}>
+      <header className="site-header" ref={headerRef}>
         <nav className="nav" aria-label="Navegação principal">
+          <span className="nav-surface" aria-hidden="true" />
           <a className="logo" href="#" aria-label="Launch — início">
             <img src={logoHeader} alt="" width="48" height="48" />
           </a>

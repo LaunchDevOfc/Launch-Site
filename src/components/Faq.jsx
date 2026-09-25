@@ -54,12 +54,12 @@ export default function Faq() {
   return (
     <section className="section faq-section theme-light" id="perguntas-frequentes" aria-labelledby="faq-title">
       <div className="wrap faq-layout">
-        <header className="faq-intro">
+        <header className="faq-intro" data-reveal>
           <h2 className="section-title" id="faq-title">Antes de colocar sua ideia em <span>movimento.</span></h2>
           <p>Reunimos aqui o que costuma surgir nas primeiras conversas com a Launch.</p>
         </header>
 
-        <div className="faq-accordion">
+        <div className="faq-accordion" data-reveal data-reveal-delay="60">
           {questions.map((item, index) => {
             const open = openIndex === index;
             const buttonId = `faq-question-${index + 1}`;

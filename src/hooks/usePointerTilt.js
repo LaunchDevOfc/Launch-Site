@@ -25,12 +25,18 @@ export function usePointerTilt({ render, ease = 0.11 }) {
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const section = stage.closest('.hero');
+    const isPaused = () => document.hidden || section?.classList.contains('is-paused');
 
     const desired = { x: 0, y: 0, active: 0 };
     const current = { x: 0, y: 0, active: 0 };
     let frame = 0;
 
     function step() {
+      if (isPaused() || reduced.matches || !finePointer.matches) {
+        reset();
+        return;
+      }
       let moving = false;
       for (const key of ['x', 'y', 'active']) {
         current[key] += (desired[key] - current[key]) * ease;
@@ -51,7 +57,7 @@ export function usePointerTilt({ render, ease = 0.11 }) {
     const invalidate = () => { rect = null; };
 
     function onPointerMove(event) {
-      if (reduced.matches || !finePointer.matches || event.pointerType === 'touch') return;
+      if (isPaused() || reduced.matches || !finePointer.matches || event.pointerType === 'touch') return;
       rect ??= stage.getBoundingClientRect();
       const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
       const y = ((event.clientY - rect.top) / rect.height) * 2 - 1;
@@ -62,16 +68,36 @@ export function usePointerTilt({ render, ease = 0.11 }) {
     }
 
     function onLeave() {
+      if (isPaused() || reduced.matches || !finePointer.matches) {
+        reset();
+        return;
+      }
       desired.x = 0;
       desired.y = 0;
       desired.active = 0;
       run();
     }
 
+    function reset() {
+      cancelAnimationFrame(frame);
+      frame = 0;
+      for (const key of ['x', 'y', 'active']) current[key] = desired[key] = 0;
+      rect = null;
+      renderRef.current(null);
+    }
+
+    const onAvailabilityChange = () => {
+      if (isPaused() || reduced.matches || !finePointer.matches) reset();
+    };
+    const observer = new MutationObserver(onAvailabilityChange);
+    if (section) observer.observe(section, { attributes: true, attributeFilter: ['class'] });
+
     stage.addEventListener('pointermove', onPointerMove);
     stage.addEventListener('pointerleave', onLeave);
     stage.addEventListener('pointercancel', onLeave);
-    reduced.addEventListener('change', onLeave);
+    reduced.addEventListener('change', onAvailabilityChange);
+    finePointer.addEventListener('change', onAvailabilityChange);
+    document.addEventListener('visibilitychange', onAvailabilityChange);
     window.addEventListener('scroll', invalidate, { passive: true });
     window.addEventListener('resize', invalidate);
 
@@ -80,7 +106,10 @@ export function usePointerTilt({ render, ease = 0.11 }) {
       stage.removeEventListener('pointermove', onPointerMove);
       stage.removeEventListener('pointerleave', onLeave);
       stage.removeEventListener('pointercancel', onLeave);
-      reduced.removeEventListener('change', onLeave);
+      observer.disconnect();
+      reduced.removeEventListener('change', onAvailabilityChange);
+      finePointer.removeEventListener('change', onAvailabilityChange);
+      document.removeEventListener('visibilitychange', onAvailabilityChange);
       window.removeEventListener('scroll', invalidate);
       window.removeEventListener('resize', invalidate);
       renderRef.current(null);

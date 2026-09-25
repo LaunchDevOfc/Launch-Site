@@ -1,17 +1,14 @@
-import { useInView } from '../hooks/useInView.js';
 import ContactLink from './ContactLink.jsx';
 
 export default function About() {
-  const [sectionRef, isVisible] = useInView({ rootMargin: '-80px' });
-
-  return <section className={`section about-section${isVisible ? ' is-visible' : ''}`} id="sobre" ref={sectionRef}>
+  return <section className="section about-section" id="sobre">
     <div className="wrap about">
-      <div className="about-visual" aria-hidden="true">
+      <div className="about-visual" aria-hidden="true" data-reveal>
         <div className="about-visual-orbit about-visual-orbit-one" />
         <div className="about-visual-orbit about-visual-orbit-two" />
         <img className="about-visual-logo" src="/launch-logo1.svg" alt="" />
       </div>
-      <div className="about-copy">
+      <div className="about-copy" data-reveal data-reveal-delay="60">
         <div className="eyebrow">Quem somos</div>
         <h2 className="section-title">Software sob medida, com clareza do primeiro rascunho ao próximo passo.</h2>
         <p className="about-lead">A Launch é uma software house pequena para empresas que precisam transformar uma operação real em uma solução que funciona de verdade.</p>

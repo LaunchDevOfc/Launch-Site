@@ -53,14 +53,14 @@ export default function OperationsComparison() {
   };
 
   return <section className="section operations-comparison-section" id="transformacao" ref={comparisonRef}><div className="wrap operations-comparison-layout">
-    <m.div className="operations-comparison-head" initial={{ opacity: 0, y: 14 }} animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }} transition={{ duration: .45, ease: [.16, 1, .3, 1] }}><div className="eyebrow">Na operação</div><h2 className="section-title">Menos trabalho manual. Mais controle da operação.</h2><p>Uma solução feita para a sua rotina transforma esforço repetitivo em processos que trabalham a favor do negócio.</p><ContactLink className="btn btn-sm operations-comparison-cta" subject="falar-projeto">Falar sobre o projeto <span aria-hidden="true">→</span></ContactLink></m.div>
-    <m.div className="operations-comparison" initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }} transition={{ duration: .55, delay: .08, ease: [.16, 1, .3, 1] }}>
+    <div className="operations-comparison-head" data-reveal><div className="eyebrow">Na operação</div><h2 className="section-title">Menos trabalho manual. Mais controle da operação.</h2><p>Uma solução feita para a sua rotina transforma esforço repetitivo em processos que trabalham a favor do negócio.</p><ContactLink className="btn btn-sm operations-comparison-cta" subject="falar-projeto">Falar sobre o projeto <span aria-hidden="true">→</span></ContactLink></div>
+    <div className="operations-comparison" data-reveal data-reveal-delay="60">
       <div className={`comparison-surface${dragging ? ' is-dragging' : ''}`} ref={surfaceRef}>
         <TransformationState after />
         <div className="comparison-before-layer" style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}><TransformationState /></div>
         <div className={`comparison-divider${position === 0 ? ' is-at-start' : ''}${position === 100 ? ' is-at-end' : ''}`} style={{ left: `${position}%` }}><m.span className="comparison-handle-motion" animate={!reduceMotion && inView && !dragging ? { x: [0, 5, -4, 0] } : { x: 0 }} transition={{ duration: 1.2, delay: .75, ease: 'easeInOut' }}><span className="comparison-handle" role="slider" tabIndex={0} aria-label="Comparar antes e depois" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(position)} aria-valuetext={`${Math.round(position)}% do cenário anterior visível`} onPointerDown={beginDrag} onPointerMove={(event) => dragging && updatePosition(event.clientX)} onPointerUp={endDrag} onPointerCancel={endDrag} onKeyDown={handleKeyDown}><i /><i /><i /></span></m.span></div>
       </div>
       <p className="comparison-instruction">Arraste o controle para explorar cada transformação.</p>
-    </m.div>
+    </div>
   </div></section>;
 }

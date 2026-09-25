@@ -12,6 +12,7 @@ import SocialGooeyMenu from './components/SocialGooeyMenu.jsx';
 import { ContactProvider } from './context/ContactContext.jsx';
 import { ServiceProvider } from './context/ServiceContext.jsx';
 import { usePauseOffscreen } from './hooks/usePauseOffscreen.js';
+import { useScrollReveal } from './hooks/useScrollReveal.js';
 
 // Os recursos de animação chegam num chunk à parte, depois do primeiro render.
 const loadMotionFeatures = () => import('./lib/motionFeatures.js').then((module) => module.default);
@@ -20,6 +21,7 @@ const loadMotionFeatures = () => import('./lib/motionFeatures.js').then((module)
 const ANIMATED_SECTIONS = ['.hero', '#processo', '.about-section'];
 
 export default function App() {
+  useScrollReveal();
   usePauseOffscreen(ANIMATED_SECTIONS);
 
   return (
