@@ -4,7 +4,7 @@
 .hero {
   position: relative;
   overflow: hidden;
-  padding: clamp(64px, 8vw, 118px) 0 0;
+  padding: clamp(64px, 8vw, 118px) 0 clamp(58px, 7vw, 92px);
   background: #000;
   color: #fff;
   isolation: isolate;
@@ -34,7 +34,7 @@
   grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
   gap: clamp(32px, 4.5vw, 68px);
   align-items: center;
-  min-height: min(68vh, 600px);
+  min-height: min(62vh, 560px);
 }
 
 /* =========================
@@ -146,8 +146,8 @@
   width: 178%;
   aspect-ratio: 1 / .78;
   background:
-    radial-gradient(ellipse, rgba(255, 36, 54, .34) 0%, rgba(255, 36, 54, .13) 34%, transparent 66%);
-  opacity: calc(.84 + var(--pointer-active, 0) * .3);
+    radial-gradient(ellipse, rgba(205, 21, 44, .29) 0%, rgba(142, 0, 19, .11) 34%, transparent 66%);
+  opacity: calc(.76 + var(--pointer-active, 0) * .22);
   transform: translate(
     calc(-50% + var(--pointer-x, 0) * 18px),
     calc(-50% + var(--pointer-y, 0) * 13px)
@@ -254,48 +254,13 @@
 
 /* Vem antes das camadas no DOM, então fica atrás delas. */
 .hero-logo-bloom {
-  color: var(--red-bright);
-  filter: blur(26px);
-  opacity: calc(.6 + var(--pointer-active, 0) * .3);
+  color: #a90c22;
+  filter: blur(28px);
+  opacity: calc(.43 + var(--pointer-active, 0) * .2);
   transform: scale(1.04);
 }
 
 .hero-logo-face { filter: drop-shadow(0 20px 30px rgba(0, 0, 0, .6)); }
-
-/* =========================
-   NÚMEROS
-========================= */
-
-.hero-stats {
-  display: flex;
-  gap: 0;
-  margin-top: clamp(46px, 6vw, 80px);
-  border-top: 1px solid rgba(255, 255, 255, .14);
-  position: relative;
-  z-index: 2;
-}
-
-.stat {
-  flex: 1;
-  padding: 20px 20px 40px 0;
-  border-right: 1px solid rgba(255, 255, 255, .14);
-  position: relative;
-}
-
-.stat:last-child { border-right: none; }
-
-.stat .n {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(24px, 2.4vw, 30px);
-  font-weight: 700;
-  color: #fff;
-}
-
-.stat .l {
-  font-size: 13px;
-  color: rgba(255, 255, 255, .5);
-  margin-top: 4px;
-}
 
 /* =========================
    ENTRADA
@@ -321,8 +286,6 @@
 .hero-content > *:nth-child(2) { animation-delay: .12s; }
 .hero-content > *:nth-child(3) { animation-delay: .2s; }
 .hero-content > *:nth-child(4) { animation-delay: .28s; }
-.hero-stats { animation: hero-rise .7s .36s cubic-bezier(.16, 1, .3, 1) both; }
-
 /* =========================
    RESPONSIVO
 ========================= */
@@ -352,7 +315,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hero-content > *,
-  .hero-stats,
   .hero-logo-float { animation: none; }
   .hero-logo-scene { transform: rotateX(46deg) rotateY(16deg) rotateZ(-12deg); }
 }

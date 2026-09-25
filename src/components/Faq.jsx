@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import ContactLink from './ContactLink.jsx';
 
 const questions = [
   {
@@ -56,17 +55,8 @@ export default function Faq() {
     <section className="section faq-section" id="perguntas-frequentes" aria-labelledby="faq-title">
       <div className="wrap faq-layout">
         <header className="faq-intro">
-          <div className="eyebrow">Perguntas frequentes</div>
-          <h2 id="faq-title">Algumas respostas antes de começarmos seu projeto.</h2>
-          <p>Entenda como a Launch transforma necessidades reais de negócio em soluções digitais feitas para a sua operação.</p>
-          <div className="faq-reading-status" aria-live="polite">
-            <span className="faq-reading-mark" aria-hidden="true">?</span>
-            <span>Pergunta selecionada</span>
-            <motion.strong key={openIndex} initial={{ opacity: 0, y: 3 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.18 }}>
-              {openIndex >= 0 ? `${String(openIndex + 1).padStart(2, '0')} / ${String(questions.length).padStart(2, '0')}` : '—'}
-            </motion.strong>
-          </div>
-          <ContactLink className="faq-intro-link" subject="falar-projeto">Ainda ficou com dúvida? Vamos conversar <span aria-hidden="true">→</span></ContactLink>
+          <h2 id="faq-title">Antes de colocar sua ideia em <span>movimento.</span></h2>
+          <p>Reunimos aqui o que costuma surgir nas primeiras conversas com a Launch.</p>
         </header>
 
         <div className="faq-accordion">

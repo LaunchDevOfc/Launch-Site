@@ -21,7 +21,7 @@ const layers = Array.from({ length: DEPTH_LAYERS }, (_, index) => {
   const t = (index + 1) / DEPTH_LAYERS;
   return {
     depth: -(index + 1) * LAYER_STEP,
-    color: mixHex('#C20020', '#3E000B', t)
+    color: mixHex('#981426', '#290007', t)
   };
 });
 

@@ -1,15 +1,31 @@
-import logoHeader from '../assets/logo-header.svg';
+import { services } from '../data/services.js';
+import { useServiceSelection } from '../context/ServiceContext.jsx';
 import ContactLink from './ContactLink.jsx';
 
-const footerLinks = [
-  { href: '#servicos', label: 'Serviços' },
+const compactServiceLabels = {
+  'landing-pages': 'Landing Pages',
+  'sistemas-personalizados': 'Sistemas',
+  'automacao-inteligente': 'Automação com IA',
+  'dashboards-gestao': 'Dashboards',
+  'atendimento-ia': 'Atendimento com IA',
+  'orcamentos-digitais': 'Orçamentos Digitais'
+};
+
+const launchLinks = [
   { href: '#processo', label: 'Processo' },
-  { href: '#sobre', label: 'Equipe' },
+  { href: '#transformacao', label: 'Resultados' },
+  { href: '#sobre', label: 'Quem Somos' },
+  { href: '#perguntas-frequentes', label: 'FAQ' },
   { href: '#contato', label: 'Contato', contact: true }
 ];
 
-function FooterLink({ link }) {
-  return link.contact ? <ContactLink>{link.label}</ContactLink> : <a href={link.href}>{link.label}</a>;
+function FooterServiceLink({ service }) {
+  const { goToService } = useServiceSelection();
+  return (
+    <a href="#servicos" onClick={(event) => { event.preventDefault(); goToService(service.id); }}>
+      {compactServiceLabels[service.id] ?? service.title}
+    </a>
+  );
 }
 
 export default function Footer() {
@@ -19,13 +35,31 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="wrap site-footer-inner">
         <div className="site-footer-main">
-          <a className="site-footer-logo" href="#" aria-label="Launch — voltar ao início">
-            <img src={logoHeader} alt="" width="44" height="44" />
-            <span>LAUNCH</span>
-          </a>
+          <div className="site-footer-brand">
+            <a className="site-footer-logo" href="#" aria-label="Launch — voltar ao início">
+              <img src="/img/servicos/LogoEscrita.png" alt="Launch" width="162" height="54" />
+            </a>
+            <p>Soluções digitais pensadas para as necessidades do seu negócio.</p>
+          </div>
 
-          <nav className="site-footer-nav" aria-label="Navegação do rodapé">
-            {footerLinks.map((link) => <FooterLink link={link} key={link.href} />)}
+          <nav className="site-footer-group" aria-labelledby="footer-services-title">
+            <h2 id="footer-services-title">Serviços</h2>
+            <div className="site-footer-links site-footer-service-links">
+              {services.map((service) => (
+                <FooterServiceLink service={service} key={service.id} />
+              ))}
+            </div>
+          </nav>
+
+          <nav className="site-footer-group" aria-labelledby="footer-launch-title">
+            <h2 id="footer-launch-title">Launch</h2>
+            <div className="site-footer-links">
+              {launchLinks.map((link) => link.contact ? (
+                <ContactLink key={link.href}>{link.label}</ContactLink>
+              ) : (
+                <a href={link.href} key={link.href}>{link.label}</a>
+              ))}
+            </div>
           </nav>
         </div>
 

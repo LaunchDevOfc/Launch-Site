@@ -1,0 +1,157 @@
+/* Menu social global inspirado no Gooey Plus Menu do Transitions.dev. */
+.social-gooey {
+  --social-size: 50px;
+  position: fixed;
+  z-index: 60;
+  right: max(22px, env(safe-area-inset-right));
+  bottom: max(22px, env(safe-area-inset-bottom));
+  width: 240px;
+  height: 240px;
+  pointer-events: none;
+}
+
+.social-gooey-liquid {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.social-gooey-blob {
+  fill: var(--red);
+  transform: translate(0, 0);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 250ms cubic-bezier(.22,1,.36,1);
+  will-change: transform;
+}
+
+.social-gooey.is-open .social-gooey-blob:not(.social-gooey-blob-main) {
+  transform: translate(var(--social-x), var(--social-y));
+  transition: transform 430ms cubic-bezier(.34,1.5,.64,1);
+  transition-delay: calc(var(--social-index) * 42ms);
+}
+
+.social-gooey-actions {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.social-gooey-action,
+.social-gooey-toggle {
+  position: absolute;
+  left: calc(210px - var(--social-size) / 2);
+  top: calc(210px - var(--social-size) / 2);
+  display: grid;
+  width: var(--social-size);
+  height: var(--social-size);
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  box-shadow: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.social-gooey-action {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(0, 0) scale(.68);
+  transition:
+    transform 250ms cubic-bezier(.22,1,.36,1),
+    opacity 120ms ease;
+  transition-delay: 0ms;
+  will-change: transform, opacity;
+}
+
+.social-gooey.is-open .social-gooey-action {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(var(--social-x), var(--social-y)) scale(1);
+  transition:
+    transform 430ms cubic-bezier(.34,1.5,.64,1),
+    opacity 160ms ease;
+  transition-delay: calc(var(--social-index) * 42ms);
+}
+
+.social-gooey-action svg { width: 21px; height: 21px; }
+.social-gooey-action.is-unconfigured { color: rgba(255,255,255,.68); cursor: not-allowed; }
+
+.social-gooey-toggle {
+  z-index: 2;
+  width: 54px;
+  height: 54px;
+  left: 183px;
+  top: 183px;
+  pointer-events: auto;
+  box-shadow: 0 10px 26px rgba(0,0,0,.26);
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.social-gooey-toggle svg {
+  width: 23px;
+  height: 23px;
+  transition: transform 330ms cubic-bezier(.34,1.45,.64,1);
+}
+
+.social-gooey.is-open .social-gooey-toggle svg { transform: rotate(45deg); }
+.social-gooey-toggle:hover { background: var(--red-deep); transform: scale(1.04); }
+.social-gooey-action:not(.is-unconfigured):hover { background: var(--red-deep); }
+
+.social-gooey-toggle:focus-visible,
+.social-gooey-action:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .social-gooey-action::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 50%;
+    right: calc(100% + 11px);
+    width: max-content;
+    max-width: 180px;
+    padding: 6px 8px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 4px;
+    background: #171719;
+    color: rgba(255,255,255,.9);
+    box-shadow: 0 8px 20px rgba(0,0,0,.2);
+    font: 600 11px/1.2 'Inter', sans-serif;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(5px,-50%);
+    transition: opacity 140ms ease, transform 180ms ease;
+  }
+  .social-gooey-action:hover::after,
+  .social-gooey-action:focus-visible::after { opacity: 1; transform: translate(0,-50%); }
+}
+
+@media (max-width: 600px) {
+  .social-gooey {
+    --social-size: 48px;
+    right: max(13px, env(safe-area-inset-right));
+    bottom: max(14px, env(safe-area-inset-bottom));
+    transform: scale(.92);
+    transform-origin: right bottom;
+  }
+  .social-gooey-toggle { width: 52px; height: 52px; left: 184px; top: 184px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social-gooey-blob,
+  .social-gooey-action,
+  .social-gooey-toggle,
+  .social-gooey-toggle svg { transition: none !important; }
+  .social-gooey-liquid { display: none; }
+  .social-gooey-action,
+  .social-gooey-toggle { box-shadow: 0 6px 18px rgba(0,0,0,.22); }
+}

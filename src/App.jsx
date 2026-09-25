@@ -7,20 +7,25 @@ import About from './components/About.jsx';
 import Faq from './components/Faq.jsx';
 import Contact from './components/Contact.jsx';
 import Footer from './components/Footer.jsx';
+import SocialGooeyMenu from './components/SocialGooeyMenu.jsx';
 import { ContactProvider } from './context/ContactContext.jsx';
+import { ServiceProvider } from './context/ServiceContext.jsx';
 
 export default function App() {
   return (
     <ContactProvider>
-      <SiteHeader />
-      <Hero />
-      <Services />
-      <Process />
-      <OperationsComparison />
-      <About />
-      <Faq />
-      <Contact />
-      <Footer />
+      <ServiceProvider>
+        <SiteHeader />
+        <Hero />
+        <Services />
+        <Process />
+        <OperationsComparison />
+        <About />
+        <Faq />
+        <Contact />
+        <Footer />
+        <SocialGooeyMenu />
+      </ServiceProvider>
     </ContactProvider>
   );
 }
