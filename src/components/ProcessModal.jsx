@@ -14,7 +14,7 @@ export default function ProcessModal({ active, onClose }) {
 
   return (
     <dialog
-      className="process-modal"
+      className="process-modal theme-dark"
       id="process-modal"
       aria-labelledby="process-modal-title"
       aria-describedby="process-modal-summary"
@@ -24,7 +24,7 @@ export default function ProcessModal({ active, onClose }) {
       {step && (
         <div className="process-modal-panel">
           <button
-            className="process-modal-close"
+            className="icon-btn process-modal-close"
             type="button"
             aria-label="Fechar detalhes da etapa"
             autoFocus

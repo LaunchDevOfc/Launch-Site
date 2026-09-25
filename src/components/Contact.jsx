@@ -26,7 +26,7 @@ export default function Contact() {
       <div className="wrap contact-layout">
         <header className="contact-copy">
           <div className="eyebrow">Seu próximo projeto</div>
-          <h2 id="contact-title">Vamos transformar sua ideia em uma solução que funciona.</h2>
+          <h2 className="section-title" id="contact-title">Vamos transformar sua ideia em uma solução que funciona.</h2>
           <p className="contact-description">
             A Launch desenvolve software sob medida e soluções digitais para empresas — de sistemas personalizados e
             automações com IA a landing pages, dashboards e novos produtos digitais.

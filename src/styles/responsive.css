@@ -1,35 +1,31 @@
 /* Menu mobile e breakpoints gerais. */
-  .nav-toggle{
-    display:none;
-    flex-direction:column;
-    gap:5px;
-    background:none;
-    border:none;
-    cursor:pointer;
-    padding:6px;
-  }
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+}
 
-  .nav-toggle span{width:22px; height:2px; background:var(--ink); transition:transform .2s, opacity .2s;}
-  .nav-toggle.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-  .nav-toggle.active span:nth-child(2){opacity:0;}
-  .nav-toggle.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.nav-toggle span { width: 20px; height: 2px; border-radius: 2px; background: var(--text); transition: transform .2s, opacity .2s; }
+.nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.active span:nth-child(2) { opacity: 0; }
+.nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-  @media (max-width:760px){
-    .nav-toggle{display:flex;}
-    .navlinks{
-      display:none;
-      position:absolute; top:100%; left:0; right:0;
-      background:#fff;
-      flex-direction:column;
-      gap:0;
-      border-bottom:1px solid var(--line);
-    }
-    .navlinks.open{display:flex;}
-    .navlinks a{padding:16px 32px; border-top:1px solid var(--line);}
+@media (max-width: 760px) {
+  .nav-toggle { display: flex; }
+  .navlinks {
+    display: none;
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column;
+    gap: 0;
   }
+  .navlinks.open { display: flex; }
+}
 
-  @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto;}
-    .process-step:hover{transform:none;}
-    *{transition:none !important;}
-  }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}

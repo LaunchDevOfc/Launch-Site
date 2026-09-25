@@ -82,7 +82,7 @@
 }
 
 .social-gooey-action svg { width: 21px; height: 21px; }
-.social-gooey-action.is-unconfigured { color: rgba(255,255,255,.68); cursor: not-allowed; }
+.social-gooey-action.is-unconfigured { color: rgba(255,255,255,.6); cursor: not-allowed; }
 
 .social-gooey-toggle {
   z-index: 2;
@@ -102,12 +102,13 @@
 }
 
 .social-gooey.is-open .social-gooey-toggle svg { transform: rotate(45deg); }
-.social-gooey-toggle:hover { background: var(--red-deep); transform: scale(1.04); }
-.social-gooey-action:not(.is-unconfigured):hover { background: var(--red-deep); }
+.social-gooey-toggle:hover { background: var(--red-hover); transform: scale(1.04); }
+.social-gooey-toggle:active { background: var(--red-active); }
+.social-gooey-action:not(.is-unconfigured):hover { background: var(--red-hover); }
 
 .social-gooey-toggle:focus-visible,
 .social-gooey-action:focus-visible {
-  outline: 3px solid #fff;
+  outline: 2px solid var(--focus);
   outline-offset: 3px;
 }
 
@@ -120,12 +121,12 @@
     width: max-content;
     max-width: 180px;
     padding: 6px 8px;
-    border: 1px solid rgba(255,255,255,.12);
-    border-radius: 4px;
-    background: #171719;
-    color: rgba(255,255,255,.9);
-    box-shadow: 0 8px 20px rgba(0,0,0,.2);
-    font: 600 11px/1.2 'Inter', sans-serif;
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    background: var(--surface-2);
+    color: var(--text);
+    box-shadow: var(--shadow-card);
+    font: 600 12px/1.2 var(--font-body);
     opacity: 0;
     pointer-events: none;
     transform: translate(5px,-50%);

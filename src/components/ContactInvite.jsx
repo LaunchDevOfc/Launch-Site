@@ -25,7 +25,7 @@ export default function ContactInvite({ open, onDismiss, onSyncClose }) {
         if (event.target === dialogRef.current) onDismiss();
       }}
     >
-      <button className="contact-invite-close" type="button" aria-label="Fechar convite" onClick={onDismiss}>
+      <button className="icon-btn contact-invite-close" type="button" aria-label="Fechar convite" onClick={onDismiss}>
         ×
       </button>
       <span className="contact-invite-kicker">UMA CONVERSA PODE SER O COMEÇO</span>

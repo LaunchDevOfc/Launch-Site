@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 
 const questions = [
   {
@@ -52,10 +52,10 @@ export default function Faq() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section className="section faq-section" id="perguntas-frequentes" aria-labelledby="faq-title">
+    <section className="section faq-section theme-light" id="perguntas-frequentes" aria-labelledby="faq-title">
       <div className="wrap faq-layout">
         <header className="faq-intro">
-          <h2 id="faq-title">Antes de colocar sua ideia em <span>movimento.</span></h2>
+          <h2 className="section-title" id="faq-title">Antes de colocar sua ideia em <span>movimento.</span></h2>
           <p>Reunimos aqui o que costuma surgir nas primeiras conversas com a Launch.</p>
         </header>
 
@@ -81,7 +81,7 @@ export default function Faq() {
                     <span className="faq-icon"><ToggleIcon open={open} /></span>
                   </button>
                 </h3>
-                <motion.div
+                <m.div
                   className="faq-answer"
                   id={panelId}
                   role="region"
@@ -92,7 +92,7 @@ export default function Faq() {
                   transition={{ duration: 0.24, ease: [.16, 1, .3, 1] }}
                 >
                   <p>{item.answer}</p>
-                </motion.div>
+                </m.div>
               </article>
             );
           })}

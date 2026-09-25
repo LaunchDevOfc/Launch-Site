@@ -1,18 +1,8 @@
+/* Processo: seis etapas em fluxo serpentina, conectadas pela camada SVG. */
 #processo {
   position: relative;
   overflow: hidden;
-  background: #111113;
-  color: #f5f5f5;
-}
-
-#processo .section-head { margin-bottom: 56px; }
-#processo .eyebrow { color: #ff7784; }
-#processo .section-head h2 {
-  max-width: 720px;
-  margin-top: 16px;
-  color: #f5f5f5;
-  font-size: clamp(34px, 4.5vw, 48px);
-  letter-spacing: -0.035em;
+  background: var(--bg);
 }
 
 .process-flow {
@@ -25,24 +15,8 @@
   padding: 4px 0 44px;
 }
 
-.process-step {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  box-sizing: border-box;
-  height: 246px;
-  min-width: 0;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 22px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 14px;
-  background: #1a1a1d;
-  color: #fff;
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
-  cursor: pointer;
-  transition: border-color 180ms ease, box-shadow 180ms ease;
-}
+/* O artigo guarda a geometria (as setas medem por ele); só a superfície flutua. */
+.process-step { position: relative; z-index: 1; height: 246px; min-width: 0; }
 
 .process-step:nth-child(1) { grid-area: 1 / 1; }
 .process-step:nth-child(2) { grid-area: 1 / 2; }
@@ -50,6 +24,28 @@
 .process-step:nth-child(4) { grid-area: 2 / 3; }
 .process-step:nth-child(5) { grid-area: 2 / 2; }
 .process-step:nth-child(6) { grid-area: 2 / 1; }
+
+/* Cards do processo: visual original do projeto, mantido de propósito. */
+.process-step-surface {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 14px;
+  background: #1a1a1d;
+  color: #fff;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, .22);
+  transition: border-color var(--dur) ease, box-shadow var(--dur) ease;
+}
+/* O foco do botão é mostrado no card inteiro. */
+.process-step:has(:focus-visible) .process-step-surface { outline: 2px solid var(--focus); outline-offset: 4px; }
+.process-step .process-step-open:focus-visible { outline: none; }
+@media (hover: hover) and (pointer: fine) {
+  .process-step:hover .process-step-surface { border-color: rgba(255, 255, 255, .3); box-shadow: 0 22px 42px rgba(0, 0, 0, .32); }
+}
 
 .process-step-head {
   display: flex;
@@ -60,9 +56,9 @@
 }
 
 .process-step-number {
-  color: rgba(255, 255, 255, 0.42);
-  font: 500 10px 'JetBrains Mono', monospace;
-  letter-spacing: 0.13em;
+  color: rgba(255, 255, 255, .42);
+  font: 500 10px var(--font-mono);
+  letter-spacing: .13em;
 }
 
 .process-step-icon {
@@ -74,124 +70,51 @@
   background: #8f1023;
   color: #fff;
 }
-
 .process-step-icon svg { width: 21px; height: 21px; }
+
+.process-modal-icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--red-tint);
+  color: var(--red-text);
+}
 
 .process-step h3 {
   max-width: 240px;
   font-size: 20px;
   font-weight: 600;
   line-height: 1.12;
-  letter-spacing: -0.03em;
+  letter-spacing: -.03em;
   text-wrap: balance;
+  color: #fff;
 }
 
 .process-step-tag {
   margin-top: 10px;
-  color: rgba(255, 255, 255, 0.64);
+  color: rgba(255, 255, 255, .64);
   font-size: 12.5px;
   line-height: 1.5;
 }
 
-.process-step-hint {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  margin-top: auto;
-  padding-top: 14px;
-  color: #ff8892;
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.process-step-info {
-  display: grid;
-  width: 17px;
-  height: 17px;
-  place-items: center;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  font: 600 11px/1 Georgia, serif;
-}
-
 .process-step-open {
   align-self: flex-start;
+  min-height: 0;
   margin-top: auto;
   padding: 9px 14px;
+  gap: 6px;
   border-radius: 3px;
   font-size: 13px;
   line-height: 1.25;
-  cursor: pointer;
 }
+.process-step-open:hover { background: #8E0013; border-color: #8E0013; transform: translateY(-1px); }
 
-.process-step-open span { margin-left: 6px; }
-.process-step:focus-within { outline: 2px solid var(--red-bright); outline-offset: 4px; }
-
-.process-connector {
-  position: absolute;
-  z-index: 2;
-  display: block;
-  pointer-events: none;
-  color: rgba(255, 255, 255, 0.3);
-}
-
-.process-connector svg {
-  display: none;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 1.35;
-}
-
-.process-connector-direction {
-  stroke-width: 1.65;
-}
-
-.process-step:nth-child(1) .process-connector,
-.process-step:nth-child(2) .process-connector {
-  top: 50%;
-  left: 100%;
-  width: var(--process-column-gap);
-  height: 24px;
-  transform: translateY(-50%);
-}
-
-.process-step:nth-child(1) .process-connector-horizontal,
-.process-step:nth-child(2) .process-connector-horizontal { display: block; }
-
-.process-step:nth-child(3) .process-connector {
-  top: 100%;
-  left: 50%;
-  width: 24px;
-  height: var(--process-row-gap);
-  transform: translateX(-50%);
-}
-
-.process-step:nth-child(3) .process-connector-vertical { display: block; }
-
-.process-step:nth-child(4) .process-connector,
-.process-step:nth-child(5) .process-connector {
-  top: 50%;
-  right: 100%;
-  width: var(--process-column-gap);
-  height: 24px;
-  transform: translateY(-50%) rotate(180deg);
-}
-
-.process-step:nth-child(4) .process-connector-horizontal,
-.process-step:nth-child(5) .process-connector-horizontal { display: block; }
-
-@media (hover: hover) and (pointer: fine) {
-  .process-step:hover {
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 22px 42px rgba(0, 0, 0, 0.32);
-  }
-  .process-step-open:hover { transform: translateY(-1px); }
-}
+/* Camada de conexões desenhada em Process.jsx. */
+.process-connection-layer { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.process-connection-layer path { fill: none; stroke: var(--text-muted); stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.35; vector-effect: non-scaling-stroke; }
+.process-connection-layer .process-connection-arrow { stroke-width: 1.65; }
 
 @keyframes process-card-float {
   0%, 100% { translate: 0 0; }
@@ -200,19 +123,20 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .process-flow.is-visible .process-step.is-revealed {
+  .process-flow.is-visible .process-step.is-revealed .process-step-surface {
     animation: process-card-float var(--float-duration, 6.5s) ease-in-out infinite;
-    animation-delay: var(--float-delay, 0.45s);
+    animation-delay: var(--float-delay, .45s);
   }
 
-  .process-flow.is-visible .process-step:nth-child(1) { --float-duration: 6.7s; --float-delay: 0.45s; --float-x: 1px; --float-x-return: -.65px; }
-  .process-flow.is-visible .process-step:nth-child(2) { --float-duration: 7.2s; --float-delay: 0.55s; --float-x: -1.2px; --float-x-return: .8px; }
-  .process-flow.is-visible .process-step:nth-child(3) { --float-duration: 6.2s; --float-delay: 0.4s; --float-x: .8px; --float-x-return: -.5px; }
-  .process-flow.is-visible .process-step:nth-child(4) { --float-duration: 7.5s; --float-delay: 0.6s; --float-x: -1px; --float-x-return: .65px; }
-  .process-flow.is-visible .process-step:nth-child(5) { --float-duration: 6.4s; --float-delay: 0.5s; --float-x: 1.15px; --float-x-return: -.75px; }
-  .process-flow.is-visible .process-step:nth-child(6) { --float-duration: 7s; --float-delay: 0.35s; --float-x: -.75px; --float-x-return: .5px; }
+  .process-flow.is-visible .process-step:nth-child(1) { --float-duration: 6.7s; --float-delay: .45s; --float-x: 1px; --float-x-return: -.65px; }
+  .process-flow.is-visible .process-step:nth-child(2) { --float-duration: 7.2s; --float-delay: .55s; --float-x: -1.2px; --float-x-return: .8px; }
+  .process-flow.is-visible .process-step:nth-child(3) { --float-duration: 6.2s; --float-delay: .4s; --float-x: .8px; --float-x-return: -.5px; }
+  .process-flow.is-visible .process-step:nth-child(4) { --float-duration: 7.5s; --float-delay: .6s; --float-x: -1px; --float-x-return: .65px; }
+  .process-flow.is-visible .process-step:nth-child(5) { --float-duration: 6.4s; --float-delay: .5s; --float-x: 1.15px; --float-x-return: -.75px; }
+  .process-flow.is-visible .process-step:nth-child(6) { --float-duration: 7s; --float-delay: .35s; --float-x: -.75px; --float-x-return: .5px; }
 }
 
+/* Modal da etapa: mesma superfície elevada dos outros diálogos. */
 html.process-modal-open { overflow: hidden; }
 .process-modal {
   position: fixed;
@@ -222,66 +146,40 @@ html.process-modal-open { overflow: hidden; }
   margin: auto;
   padding: 0;
   overflow: auto;
-  border: 1px solid rgba(255, 255, 255, 0.17);
-  border-radius: 18px;
-  background: var(--step-modal-color, #65101c);
-  color: #fff;
-  box-shadow: 0 32px 100px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  background: var(--surface-2);
+  color: var(--text-2);
+  box-shadow: var(--shadow-overlay);
 }
-.process-modal::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(8px); }
+.process-modal::backdrop { background: rgba(0, 0, 0, .72); backdrop-filter: blur(8px); }
 .process-modal-panel { position: relative; padding: 52px 42px 40px; }
-.process-modal-icon {
-  display: grid;
-  width: 43px;
-  height: 43px;
-  place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 50%;
-  color: #fff;
-}
 .process-modal-icon svg { width: 22px; height: 22px; }
 .process-modal-number {
   display: block;
   margin-top: 24px;
-  color: rgba(255, 255, 255, 0.68);
-  font: 500 11px 'JetBrains Mono', monospace;
-  letter-spacing: 0.13em;
+  color: var(--text-muted);
+  font: 500 var(--fs-label) var(--font-mono);
+  letter-spacing: .12em;
 }
-.process-modal h2 { margin: 13px 0 11px; font-size: clamp(28px, 5vw, 43px); line-height: 1.1; letter-spacing: -0.04em; }
-.process-modal-summary { margin-bottom: 20px; color: #fff; font-size: 16px; font-weight: 600; line-height: 1.5; }
-.process-modal-body { color: rgba(255, 255, 255, 0.86); font-size: 14px; line-height: 1.72; }
+.process-modal .eyebrow { margin-top: 6px; }
+.process-modal h2 { margin: 12px 0 12px; font-size: var(--fs-h3); line-height: 1.08; letter-spacing: -.035em; }
+.process-modal-summary { margin-bottom: 20px; color: var(--text); font-size: 16px; font-weight: 600; line-height: 1.5; }
+.process-modal-body { color: var(--text-2); font-size: 14px; line-height: 1.72; }
 .process-modal-body p { margin-bottom: 21px; }
 .process-modal .service-highlights { display: grid; gap: 8px; margin: 0 0 28px; list-style: none; }
-.process-modal .service-highlights li { position: relative; padding-left: 14px; }
+.process-modal .service-highlights li { position: relative; padding-left: 16px; }
 .process-modal .service-highlights li::before {
   content: '';
   position: absolute;
-  top: 0.6em;
+  top: .6em;
   left: 0;
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.72);
+  background: var(--red-text);
 }
-.process-modal-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 37px;
-  height: 37px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 50%;
-  background: transparent;
-  color: #fff;
-  font-size: 24px;
-  line-height: 1;
-  cursor: pointer;
-}
-.process-modal-close:hover { background: rgba(255, 255, 255, 0.12); }
-.process-modal :focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
-.process-modal .eyebrow { color: rgba(255, 255, 255, 0.72); }
-.process-modal .process-modal-contact { background: #fff; color: #351018; border-color: #fff; }
-.process-modal .process-modal-contact:hover { background: #f1d8dc; border-color: #f1d8dc; }
+.process-modal-close { position: absolute; top: 16px; right: 16px; }
 
 @media (min-width: 761px) and (max-width: 1080px) {
   .process-flow {
@@ -295,61 +193,9 @@ html.process-modal-open { overflow: hidden; }
   .process-step:nth-child(4) { grid-area: 2 / 1; }
   .process-step:nth-child(5) { grid-area: 3 / 1; }
   .process-step:nth-child(6) { grid-area: 3 / 2; }
-
-  .process-step:nth-child(2) .process-connector,
-  .process-step:nth-child(4) .process-connector {
-    top: 100%;
-    right: auto;
-    left: 50%;
-    width: 24px;
-    height: var(--process-row-gap);
-    transform: translateX(-50%);
-  }
-  .process-step:nth-child(2) .process-connector svg,
-  .process-step:nth-child(4) .process-connector svg { display: none; }
-  .process-step:nth-child(2) .process-connector-vertical,
-  .process-step:nth-child(4) .process-connector-vertical { display: block; }
-
-  .process-step:nth-child(3) .process-connector {
-    top: 50%;
-    right: 100%;
-    left: auto;
-    width: var(--process-column-gap);
-    height: 24px;
-    transform: translateY(-50%) rotate(180deg);
-  }
-  .process-step:nth-child(3) .process-connector svg { display: none; }
-  .process-step:nth-child(3) .process-connector-horizontal { display: block; }
-
-  .process-step:nth-child(5) .process-connector {
-    top: 50%;
-    right: auto;
-    left: 100%;
-    width: var(--process-column-gap);
-    height: 24px;
-    transform: translateY(-50%);
-  }
-  .process-step:nth-child(5) .process-connector svg { display: none; }
-  .process-step:nth-child(5) .process-connector-horizontal { display: block; }
-
-  .process-step:not(:last-child) .process-connector {
-    z-index: 3;
-    display: block !important;
-    visibility: visible !important;
-    overflow: visible;
-    color: rgba(255, 255, 255, 0.44);
-  }
-  .process-step:not(:last-child) .process-connector svg { display: none !important; visibility: visible !important; opacity: 1 !important; }
-  .process-step:nth-child(1) .process-connector-horizontal,
-  .process-step:nth-child(3) .process-connector-horizontal,
-  .process-step:nth-child(5) .process-connector-horizontal { display: block !important; }
-  .process-step:nth-child(2) .process-connector-vertical,
-  .process-step:nth-child(4) .process-connector-vertical { display: block !important; }
-  .process-step:not(:last-child) .process-connector path { vector-effect: non-scaling-stroke; }
 }
 
 @media (max-width: 760px) {
-  #processo .section-head { margin-bottom: 42px; }
   .process-flow {
     --process-row-gap: 58px;
     grid-template-columns: 1fr;
@@ -362,37 +208,14 @@ html.process-modal-open { overflow: hidden; }
     width: min(100%, 440px);
     height: 250px;
     justify-self: center;
-    padding: 20px;
   }
+  .process-step-surface { padding: 20px; }
   .process-step h3 { font-size: 19px; }
-  .process-step:not(:last-child) .process-connector {
-    top: 100%;
-    right: auto;
-    left: 50%;
-    z-index: 3;
-    width: 28px;
-    height: var(--process-row-gap);
-    transform: translateX(-50%);
-    color: rgba(255, 255, 255, 0.48);
-  }
-  .process-step:not(:last-child) .process-connector-horizontal { display: none !important; }
-  .process-step:not(:last-child) .process-connector-vertical { display: block !important; }
-  .process-step:not(:last-child) .process-connector-vertical path { vector-effect: non-scaling-stroke; }
   .process-modal-panel { padding: 50px 24px 28px; }
-  .process-modal .process-modal-contact { display: block; text-align: center; }
+  .process-modal .process-modal-contact { display: flex; width: 100%; }
 }
 
-/* A malha externa mantém a geometria; somente a superfície visual flutua. */
-.process-connection-layer { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-.process-connection-layer path { fill: none; stroke: rgba(255,255,255,.38); stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.35; vector-effect: non-scaling-stroke; }
-.process-connection-layer .process-connection-arrow { stroke-width: 1.65; }
-.process-step { z-index: 1; padding: 0; border: 0; background: transparent; box-shadow: none; cursor: default; }
-.process-step-surface { display: flex; box-sizing: border-box; width: 100%; height: 100%; flex-direction: column; align-items: flex-start; padding: 22px; border: 1px solid rgba(255,255,255,.14); border-radius: 14px; background: #1a1a1d; color: #fff; box-shadow: 0 16px 34px rgba(0,0,0,.22); transition: border-color 180ms ease, box-shadow 180ms ease; }
-.process-step:focus-within { outline: none; }.process-step:focus-within .process-step-surface { outline: 2px solid var(--red-bright); outline-offset: 4px; }
-@media (hover:hover) and (pointer:fine) { .process-step:hover .process-step-surface { border-color: rgba(255,255,255,.3); box-shadow: 0 22px 42px rgba(0,0,0,.32); } }
-@media (prefers-reduced-motion:no-preference) { .process-flow.is-visible .process-step.is-revealed { animation: none; }.process-flow.is-visible .process-step.is-revealed .process-step-surface { animation: process-card-float var(--float-duration,6.5s) ease-in-out infinite; animation-delay: var(--float-delay,.45s); } }
-@media (max-width:760px) { .process-step:nth-child(n) { padding: 0; }.process-step-surface { padding: 20px; }.process-connection-layer path { stroke: rgba(255,255,255,.48); } }
-
+/* O motion anima a entrada por estilo inline; sem movimento, o card fica parado. */
 @media (prefers-reduced-motion: reduce) {
   .process-step { transform: none !important; }
 }

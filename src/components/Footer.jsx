@@ -37,7 +37,7 @@ export default function Footer() {
         <div className="site-footer-main">
           <div className="site-footer-brand">
             <a className="site-footer-logo" href="#" aria-label="Launch — voltar ao início">
-              <img src="/img/servicos/LogoEscrita.png" alt="Launch" width="162" height="54" />
+              <img src="/img/servicos/LogoEscrita.webp" alt="Launch" width="162" height="54" />
             </a>
             <p>Soluções digitais pensadas para as necessidades do seu negócio.</p>
           </div>

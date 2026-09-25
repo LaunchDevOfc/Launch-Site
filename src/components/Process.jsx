@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import { m, useReducedMotion } from 'motion/react';
 import { processSteps } from '../data/process.js';
 import { useInView } from '../hooks/useInView.js';
 import ProcessModal from './ProcessModal.jsx';
@@ -8,7 +8,7 @@ import { processIcons } from './icons/ProcessIcons.jsx';
 function ProcessConnectionLayer({ layout, drawnCount }) {
   if (!layout) return null;
   return <svg className="process-connection-layer" viewBox={`0 0 ${layout.width} ${layout.height}`} preserveAspectRatio="none" aria-hidden="true">
-    {layout.paths.map((connection, index) => <g key={index}><motion.path d={connection.path} initial={{ pathLength: 0 }} animate={{ pathLength: index < drawnCount ? 1 : 0 }} transition={{ duration: .24, ease: [.16, 1, .3, 1] }} /><motion.path className="process-connection-arrow" d={connection.arrow} initial={{ opacity: 0 }} animate={{ opacity: index < drawnCount ? 1 : 0 }} transition={{ duration: .14, delay: .25, ease: 'easeOut' }} /></g>)}
+    {layout.paths.map((connection, index) => <g key={index}><m.path d={connection.path} initial={{ pathLength: 0 }} animate={{ pathLength: index < drawnCount ? 1 : 0 }} transition={{ duration: .24, ease: [.16, 1, .3, 1] }} /><m.path className="process-connection-arrow" d={connection.arrow} initial={{ opacity: 0 }} animate={{ opacity: index < drawnCount ? 1 : 0 }} transition={{ duration: .14, delay: .25, ease: 'easeOut' }} /></g>)}
   </svg>;
 }
 
@@ -18,7 +18,7 @@ function ProcessStep({ step, index, isActive, revealed, onOpen, cardRef }) {
   const Icon = processIcons[step.icon];
 
   return (
-    <motion.article
+    <m.article
       className={`process-step is-expandable${revealed ? ' is-revealed' : ''}`}
       style={{ '--step-modal-color': step.modalColor, pointerEvents: revealed ? 'auto' : 'none' }}
       ref={(node) => { localRef.current = node; cardRef(node); }}
@@ -26,12 +26,12 @@ function ProcessStep({ step, index, isActive, revealed, onOpen, cardRef }) {
       animate={revealed ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 12, scale: .985 }}
       transition={{ duration: .26, ease: [.16, 1, .3, 1] }}
     >
-      <div className="process-step-surface">
+      <div className="process-step-surface theme-dark">
       <div className="process-step-head">
         <span className="process-step-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-        <motion.span className="process-step-icon" aria-hidden="true" whileHover={{ rotate: -4, scale: 1.04 }}>
+        <m.span className="process-step-icon" aria-hidden="true" whileHover={{ rotate: -4, scale: 1.04 }}>
           <Icon />
-        </motion.span>
+        </m.span>
       </div>
       <h3>{step.title}</h3>
       <p className="process-step-tag">{step.tag}</p>
@@ -47,7 +47,7 @@ function ProcessStep({ step, index, isActive, revealed, onOpen, cardRef }) {
         Ver detalhes <span aria-hidden="true">→</span>
       </button>
       </div>
-    </motion.article>
+    </m.article>
   );
 }
 
@@ -158,12 +158,12 @@ export default function Process() {
   const closeStep = useCallback(() => setActive(null), []);
 
   return (
-    <section className="section" id="processo">
+    <section className="section theme-light" id="processo">
       <div className="wrap">
         <div className="section-head">
           <div>
             <div className="eyebrow">Na prática</div>
-            <h2>O que acontece depois que você entra em contato.</h2>
+            <h2 className="section-title">O que acontece depois que você entra em contato.</h2>
           </div>
         </div>
         <div className={`process-flow${isVisible ? ' is-visible' : ''}`} ref={flowRef}>

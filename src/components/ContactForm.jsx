@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 import { useContact } from '../context/ContactContext.jsx';
 import { contactSubjects, teamSizeOptions } from '../data/contactSubjects.js';
 
@@ -163,9 +163,9 @@ export default function ContactForm() {
           <input id="contact-website" name="website" type="text" tabIndex="-1" autoComplete="off" value={form.website} onChange={update('website')} />
         </div>
 
-        <motion.button className="contact-submit" type="submit" disabled={status === 'sending'} whileTap={{ scale: .99 }}>
+        <m.button className="btn btn-lg contact-submit" type="submit" disabled={status === 'sending'} whileTap={{ scale: .99 }}>
           {status === 'sending' ? <><span className="contact-spinner" aria-hidden="true" />Enviando...</> : <>Enviar mensagem <span aria-hidden="true">→</span></>}
-        </motion.button>
+        </m.button>
         <div className={`contact-form-status is-${status}`} role="status" aria-live="polite">
           {status === 'success' && 'Mensagem enviada. Recebemos seu contato e responderemos assim que possível.'}
           {status === 'error' && 'Não foi possível enviar agora. Revise os dados e tente novamente.'}

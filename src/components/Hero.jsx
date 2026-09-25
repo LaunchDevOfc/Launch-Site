@@ -21,7 +21,7 @@ export default function Hero() {
               movimento e acompanhar o próximo passo de cada negócio.
             </p>
             <div className="hero-cta">
-              <ContactLink className="btn hero-btn" subject="falar-projeto">
+              <ContactLink className="btn btn-lg hero-btn" subject="falar-projeto">
                 Solicitar orçamento
               </ContactLink>
               <a href="#servicos" className="hero-link">
