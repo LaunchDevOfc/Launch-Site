@@ -1,36 +1,36 @@
 /* Header: estrutura e comportamento originais do projeto, em versão preta. */
-.site-header { height: 91px; background: rgba(5, 5, 6, .96); border-bottom: 1px solid rgba(255, 255, 255, .08); transition: background .35s, border-color .35s; }
+.site-header { height: 91px; background: var(--header-glass); border-bottom: 1px solid rgba(255, 255, 255, .08); transition: background .35s, border-color .35s; }
 .site-header .nav { position: relative; isolation: isolate; min-height: 88px; gap: 28px; }
-.nav-surface { position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0; border: 1px solid rgba(255, 255, 255, .1); border-radius: 18px; background: rgba(14, 14, 16, .96); box-shadow: 0 14px 42px rgba(0, 0, 0, .5); transition: opacity .35s; }
+.nav-surface { position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0; border: 1px solid rgba(255, 255, 255, .1); border-radius: 18px; background: var(--header-glass-elevated); box-shadow: 0 14px 42px rgba(0, 0, 0, .5); transition: opacity .35s; }
 .site-header .nav-surface, .site-header .logo, .site-header .navlinks, .site-header .nav-actions { transform-origin: top left; }
 .site-header.is-scrolled { background: transparent; border-color: transparent; }
 .site-header.is-scrolled .nav { min-height: 64px; max-width: 1060px; margin: 10px auto 0; padding: 8px 20px; border: 1px solid transparent; border-radius: 18px; }
 .site-header.is-scrolled .nav-surface { inset: -1px; opacity: 1; }
 .site-header .logo { flex: none; width: 50px; height: 50px; }
-.site-header .logo img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.site-header .logo svg { display: block; width: 100%; height: 100%; object-fit: contain; }
 .site-header.is-scrolled .logo { width: 42px; height: 42px; border-radius: 11px; }
 .site-header .navlinks { margin-left: auto; align-items: center; gap: clamp(16px, 2.8vw, 36px); }
-.site-header .navlinks a { color: #fff; opacity: .75; white-space: nowrap; transition: opacity .2s, color .2s; }
-.site-header .navlinks a:hover, .site-header .navlinks a:focus-visible { color: var(--red-text); opacity: 1; }
-.site-header :focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+.site-header .navlinks a { color: var(--on-brand); opacity: .75; white-space: nowrap; transition: opacity .2s, color .2s; }
+.site-header .navlinks a:hover, .site-header .navlinks a:focus-visible { color: var(--brand-text); opacity: 1; }
+.site-header :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 .nav-actions { display: flex; align-items: center; gap: 14px; flex: none; }
 .nav-contact { min-height: 0; padding: 11px 17px; border-radius: 9px; line-height: 1.5; white-space: nowrap; }
-.nav-contact:hover { background: #8E0013; border-color: #8E0013; transform: translateY(-1px); }
+.nav-contact:hover { background: var(--brand-hover); border-color: var(--brand-hover); transform: translateY(-1px); }
 
-.notification-bell { position: relative; display: grid; place-items: center; width: 43px; height: 43px; flex: none; border: 1px solid rgba(255, 255, 255, .14); border-radius: 11px; background: #111113; color: #fff; cursor: pointer; transition: border-color .5s, background .5s; }
-.notification-bell:hover { border-color: var(--red); background: rgba(210, 0, 28, .12); }
+.notification-bell { position: relative; display: grid; place-items: center; width: 43px; height: 43px; flex: none; border: 1px solid rgba(255, 255, 255, .14); border-radius: 11px; background: var(--color-surface); color: var(--on-brand); cursor: pointer; transition: border-color .5s, background .5s; }
+.notification-bell:hover { border-color: var(--brand); background: var(--brand-tint); }
 .notification-bell svg { width: 21px; height: 21px; transform-origin: 50% 12%; }
 .notification-bell:not(.is-read) svg { animation: header-bell-ring 3s ease-in-out infinite; }
-.notification-count { position: absolute; top: -6px; right: -6px; display: grid; place-items: center; min-width: 19px; height: 19px; padding: 0 4px; border: 2px solid #050506; border-radius: 20px; background: var(--red); color: #fff; font: 700 10px var(--font-body); }
+.notification-count { position: absolute; top: -6px; right: -6px; display: grid; place-items: center; min-width: 19px; height: 19px; padding: 0 4px; border: 2px solid var(--color-background); border-radius: 20px; background: var(--brand); color: var(--on-brand); font: 700 10px var(--font-body); }
 @keyframes header-bell-ring { 0%, 3%, 12%, 100% { transform: rotate(0) } 5% { transform: rotate(12deg) } 7% { transform: rotate(-10deg) } 9% { transform: rotate(7deg) } 11% { transform: rotate(-3deg) } }
 
-.site-header .nav-toggle span { background: #fff; }
+.site-header .nav-toggle span { background: var(--on-brand); }
 
 /* Convite aberto pelo sino. */
 .contact-invite { position: fixed; inset: 0; margin: auto; width: min(480px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 42px; overflow: auto; border: 1px solid var(--border); border-radius: var(--r-xl); background: var(--surface-2); color: var(--text-2); box-shadow: var(--shadow-overlay); }
 .contact-invite::backdrop { background: rgba(0, 0, 0, .72); backdrop-filter: blur(8px); }
 .contact-invite-close { position: absolute; top: 18px; right: 18px; }
-.contact-invite-kicker { display: block; margin-bottom: 20px; color: var(--red-text); font: 500 var(--fs-label) var(--font-mono); letter-spacing: .12em; }
+.contact-invite-kicker { display: block; margin-bottom: 20px; color: var(--brand-text); font: 500 var(--fs-label) var(--font-mono); letter-spacing: .12em; }
 .contact-invite h2 { font-size: clamp(28px, 5vw, 36px); line-height: 1.1; letter-spacing: -.035em; margin-bottom: 16px; }
 .contact-invite p { color: var(--text-2); font-size: var(--fs-body); line-height: 1.7; margin-bottom: 28px; }
 
@@ -39,7 +39,7 @@
   .site-header { height: 75px; }
   .site-header .nav { min-height: 74px; padding: 12px 22px; }
   .site-header.is-scrolled .nav { margin: 8px 12px 0; padding: 7px 12px; min-height: 60px; }
-  .site-header .navlinks { top: calc(100% + 8px); left: 12px; right: 12px; margin: 0; padding: 8px; border: 1px solid rgba(255, 255, 255, .1); border-radius: 14px; background: #111113; box-shadow: 0 16px 35px rgba(0, 0, 0, .5); }
+  .site-header .navlinks { top: calc(100% + 8px); left: 12px; right: 12px; margin: 0; padding: 8px; border: 1px solid rgba(255, 255, 255, .1); border-radius: 14px; background: var(--color-surface); box-shadow: 0 16px 35px rgba(0, 0, 0, .5); }
   .site-header .navlinks a { border: 0; border-radius: 8px; padding: 12px 16px; }
   .site-header .navlinks a:hover { background: rgba(255, 255, 255, .06); }
   .site-header .nav-actions { margin-left: auto; }

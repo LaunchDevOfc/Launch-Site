@@ -1,4 +1,5 @@
 /* A ordem dos imports espelha a cascata do CSS original: base -> secoes -> header. */
+@import './styles/tokens.css';
 @import './styles/base.css';
 @import './styles/hero.css';
 @import './styles/services.css';

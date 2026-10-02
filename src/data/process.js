@@ -6,7 +6,7 @@ export const processSteps = [
   {
     id: 'primeira-conversa',
     icon: 'briefing',
-    modalColor: '#8C0F2A',
+    modalColor: 'var(--surface-2)',
     title: 'Primeira conversa',
     tag: 'Ouvimos sua ideia de verdade, antes de propor qualquer coisa.',
     detail:
@@ -20,7 +20,7 @@ export const processSteps = [
   {
     id: 'discussao-interna',
     icon: 'blueprint',
-    modalColor: '#7B0E26',
+    modalColor: 'var(--surface-2)',
     title: 'Discussão interna e desenho',
     tag: 'Transformamos a conversa num plano concreto.',
     detail:
@@ -34,7 +34,7 @@ export const processSteps = [
   {
     id: 'alinhamento-contrato',
     icon: 'contract',
-    modalColor: '#6A0E21',
+    modalColor: 'var(--surface-2)',
     title: 'Alinhamento e contrato',
     tag: 'Fechamos o entendimento antes de escrever qualquer código.',
     detail:
@@ -48,7 +48,7 @@ export const processSteps = [
   {
     id: 'desenvolvimento',
     icon: 'terminal',
-    modalColor: '#5A0D1D',
+    modalColor: 'var(--surface-2)',
     title: 'Desenvolvimento',
     tag: 'Aqui o sistema começa a ganhar vida de verdade.',
     detail:
@@ -62,7 +62,7 @@ export const processSteps = [
   {
     id: 'testes-com-o-cliente',
     icon: 'test',
-    modalColor: '#490D18',
+    modalColor: 'var(--surface-2)',
     title: 'Testes com o cliente',
     tag: 'Você testa, valida e garante que está no caminho certo.',
     detail:
@@ -76,7 +76,7 @@ export const processSteps = [
   {
     id: 'entrega-final',
     icon: 'launch',
-    modalColor: '#380C14',
+    modalColor: 'var(--surface-2)',
     title: 'Entrega final e suporte',
     tag: 'Sistema no ar, com a gente ao seu lado depois disso.',
     detail:

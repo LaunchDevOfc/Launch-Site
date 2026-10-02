@@ -29,6 +29,7 @@ export default function App() {
       <ContactProvider>
         <ServiceProvider>
           <SiteHeader />
+          <main id="inicio">
           <Hero />
           <Services />
           <Process />
@@ -36,6 +37,7 @@ export default function App() {
           <About />
           <Faq />
           <Contact />
+          </main>
           <Footer />
           <SocialGooeyMenu />
         </ServiceProvider>

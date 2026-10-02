@@ -5,8 +5,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 // Porte direto do bloco que vivia em js/main.js, agora com cleanup — sem ele o
 // StrictMode (e cada hot reload) deixaria SVGs duplicados no body.
 
-const START_COLOR = '#FF6B76';
-const END_COLOR = '#FF2436';
 const REVEAL_STEP = 130;
 const CARD_DURATION = 450;
 const FLOAT_DURATION = 10000;
@@ -56,6 +54,9 @@ export function useProcessFlow(stepCount, { paused = false } = {}) {
       return undefined;
     }
 
+    const palette = getComputedStyle(flow);
+    const START_COLOR = palette.getPropertyValue('--brand-text').trim();
+    const END_COLOR = palette.getPropertyValue('--brand').trim();
     const timers = [];
     const cleanups = [];
     const mobile = window.matchMedia('(max-width: 760px)');

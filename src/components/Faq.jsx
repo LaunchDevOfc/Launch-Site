@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { m } from 'motion/react';
 
 const questions = [
@@ -50,9 +50,18 @@ function ToggleIcon({ open }) {
 
 export default function Faq() {
   const [openIndex, setOpenIndex] = useState(0);
+  const [enhanced, setEnhanced] = useState(false);
+  useEffect(() => setEnhanced(true), []);
 
   return (
     <section className="section faq-section theme-light" id="perguntas-frequentes" aria-labelledby="faq-title">
+      <svg className="faq-background-flow" viewBox="0 0 1200 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <path className="faq-background-flow-line faq-background-flow-line--blue" d="M-80 168 C 116 48 274 284 492 170 S 878 82 1280 210" />
+        <path className="faq-background-flow-line faq-background-flow-line--gray" d="M-100 204 C 126 84 300 326 526 210 S 906 122 1300 250" />
+        <path className="faq-background-flow-line faq-background-flow-line--blue faq-background-flow-line--soft" d="M-70 790 C 160 660 350 918 604 796 S 988 684 1280 818" />
+        <path className="faq-background-flow-line faq-background-flow-line--gray faq-background-flow-line--soft" d="M-90 834 C 138 702 382 960 642 844 S 1010 734 1300 870" />
+        <path className="faq-background-flow-line faq-background-flow-line--gray faq-background-flow-line--middle" d="M-80 488 C 190 368 360 582 600 488 S 1000 374 1280 506" />
+      </svg>
       <div className="wrap faq-layout">
         <header className="faq-intro" data-reveal>
           <h2 className="section-title" id="faq-title">Antes de colocar sua ideia em <span>movimento.</span></h2>
@@ -86,7 +95,7 @@ export default function Faq() {
                   id={panelId}
                   role="region"
                   aria-labelledby={buttonId}
-                  aria-hidden={!open}
+                  aria-hidden={enhanced ? !open : undefined}
                   initial={false}
                   animate={{ height: open ? 'auto' : 0, opacity: open ? 1 : 0 }}
                   transition={{ duration: 0.24, ease: [.16, 1, .3, 1] }}

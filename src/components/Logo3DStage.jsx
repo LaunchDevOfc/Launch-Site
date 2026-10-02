@@ -15,6 +15,10 @@ export default function Logo3DStage() {
     const stage = stageRef.current;
     if (!stage) return undefined;
 
+    const palette = getComputedStyle(stage);
+    const brand = palette.getPropertyValue('--color-brand').trim();
+    const white = palette.getPropertyValue('--color-white').trim();
+    const background = palette.getPropertyValue('--color-background').trim();
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 100);
     camera.position.set(0, 0, 7.6);
@@ -33,16 +37,16 @@ export default function Logo3DStage() {
     const group = new THREE.Group();
     group.rotation.order = 'YXZ';
     scene.add(group);
-    scene.add(new THREE.HemisphereLight(0xffe8e8, 0x120307, 1.8));
-    const key = new THREE.DirectionalLight(0xffffff, 3.2);
+    scene.add(new THREE.HemisphereLight(white, background, 1.8));
+    const key = new THREE.DirectionalLight(white, 3.2);
     key.position.set(-3, 4, 6);
     scene.add(key);
-    const fill = new THREE.DirectionalLight(0xff2436, 1.1);
+    const fill = new THREE.DirectionalLight(brand, 1.1);
     fill.position.set(4, -1, 2);
     scene.add(fill);
 
     const material = new THREE.MeshPhysicalMaterial({
-      color: 0xe60020,
+      color: brand,
       metalness: 0.24,
       roughness: 0.3,
       clearcoat: 0.45,

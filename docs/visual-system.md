@@ -1,67 +1,74 @@
-# Sistema visual da Launch
+# Sistema visual da Launch — experimento Cobalto
 
-Fonte de verdade: `src/styles/tokens.css`. Fundamentos de tipografia, botões,
-containers e foco: `src/styles/base.css`. Cada seção mantém seu layout no CSS
-correspondente. Conteúdo e comportamento permanecem nos componentes existentes.
+## Fonte de verdade
 
-## Cores por função
+`src/styles/tokens.css`, importado antes de `base.css`, concentra a paleta.
+Antes desta migração, esse arquivo não era carregado; as cores ativas estavam
+em `base.css`, com exceções em CSS, SVG e JavaScript.
+`base.css` mantém tipografia, espaçamento, controles e reset existentes.
 
-- `--red` / `--action`: vermelho original `#D2001C`, usado nos CTAs e seleção.
-- `--action-hover` / `--action-active`: estados dos mesmos CTAs.
-- `--accent-on-dark`: tom claro de vermelho já presente na seção Processo,
-  reservado a texto/ícones ativos e foco sobre superfícies escuras. Não substitui
-  o vermelho principal em fundos de botões.
-- `--background-dark` / `--background-dark-secondary`: base e variação de seção.
-- `--surface-dark` / `--surface-dark-elevated`: cards, modais e controles internos.
-- `--background-light` / `--surface-light`: trecho editorial Quem Somos + FAQ,
-  Header e cenário Antes do comparador. A diferença do Antes/Depois é intencional.
-- `--text-*-primary`, `--text-*-secondary`, `--text-*-muted`: títulos, leitura e
-  informações auxiliares; usar a família correspondente ao fundo.
-- `--border-*`: divisórias e cards; `--border-*-hover`: interação.
-- `--field-border-dark`: contorno dos campos, com contraste maior que divisórias.
-- `--success` / `--error`: feedback do formulário, sem alterar sua lógica.
+- `--color-brand`: #2563EB; preenchimento dos CTAs e estados ativos.
+- `--color-background`: #09090B; fundo principal.
+- `--color-white`: #FAFAFA; texto de alto contraste e superfícies claras.
+- `--color-surface` / `--color-surface-elevated`: #161618 / #1D1D20.
+- `--brand-hover` / `--brand-active`: misturas com preto, sem neon.
+- `--brand-text`: mistura com branco em fundo escuro; cobalto em fundo claro.
+- `--focus`: acompanha a variante acessível da marca no contexto.
+- `--text`, `--text-2`, `--text-3`, `--text-muted`: hierarquia de leitura.
+- `--border-*`: contornos neutros. A marca fica reservada à interação.
+- `--error` e `--success`: feedback independente da identidade.
 
-Os efeitos da logo 3D e os detalhes gráficos existentes têm cores próprias de
-iluminação. Não devem ser convertidos indiscriminadamente em cores de interface.
+`.theme-light` preserva Processo e FAQ claros; `.theme-dark` restaura as
+superfícies escuras dentro deles. Nenhum seletor de tema foi adicionado.
 
-## Tipografia e ritmo
+## Logo e efeitos
 
-Inter para leitura e controles; Space Grotesk para títulos; JetBrains Mono para
-labels. H2 de seção compartilha escala de 32–44 px, peso 700 e entrelinha 1,08.
-Hero, títulos de card, títulos de modal e labels do Footer têm funções distintas.
+Header e Quem Somos usam o mesmo traçado SVG de `LaunchMark` com `currentColor`.
+As 13 camadas da logo do Hero e os gradientes metálicos derivam dos tokens de
+marca. Geometria, inclinação, animações e interação com o mouse permanecem iguais.
+O componente Three.js, atualmente fora da página, também lê a paleta do CSS.
+Anéis, feixes e sombras existentes usam iluminação neutra discreta.
 
-Container de 1120 px; margens internas de 32 px, reduzidas a 20 px até 650 px.
-O espaçamento vertical das seções varia de 72 a 104 px pelo mesmo token.
-Hero e Footer mantêm proporções próprias. Os grids e breakpoints existentes
-continuam responsáveis pela disposição dos componentes.
+O wordmark raster do Footer mantém o arquivo, transparência e proporções.
+Um filtro CSS controlado por `--brand-artwork-hue: 224deg` adapta seu vermelho
+original à família cobalto, preservando as letras brancas. Por ser uma imagem
+raster, essa reprodução é aproximada, não uma aplicação exata de #2563EB.
+As imagens dos serviços foram preservadas, inclusive cores dentro dos mockups.
+O favicon usa o traçado original em branco sobre preto, sem identidade vermelha.
 
-## Controles e superfícies
+## Experimentar outra paleta
 
-- Primary: `.btn` e `.contact-submit`, vermelho e texto branco.
-- Secondary: `.about-cta` / `.btn-outline`, contorno neutro.
-- Text: links de navegação e `.hero-link`, sem superfície de CTA.
-- Icon: sino/menu, fechamento de modal e menu social; círculo quando sua forma
-  tem função no componente, como o efeito Gooey.
+Altere `--color-brand` em `tokens.css`; preenchimentos, estados, textos e
+materiais SVG acompanham automaticamente. Revalide contraste ao mudar a marca.
+Para o wordmark raster do Footer, ajuste também `--brand-artwork-hue` nesse
+mesmo arquivo (0deg recupera seu vermelho). Não é necessário editar componentes.
+O favicon monocromático independe da cor de marca.
 
-Controles: raio 6 px. Cards: 12 px. Modais e Header flutuante: 16 px.
-CTAs compactos: altura mínima 44 px. Hero e envio do formulário: 48 px.
-Sombras: somente `--shadow-card`, `--shadow-overlay` e `--shadow-header` nas
-superfícies de interface. Transições curtas usam os tokens de interação;
-animações de entrada, flutuação, conexões e Gooey mantêm sua implementação.
+## Verificação desta migração
 
-## Contraste dos tokens
+Build de produção: `npm run build`.
+Chromium/Edge headless: comparação com a versão anterior nas larguras
+1920, 1600, 1440, 1366, 1280, 1200, 1100, 1024, 960, 900, 820, 768, 600, 430,
+390 e 360 px. Posições e dimensões das seções e textos idênticos, sem overflow
+horizontal nem erros JavaScript. Comparação geométrica com movimento reduzido;
+revisão visual em desktop e mobile.
 
-Razões calculadas pela luminância relativa sRGB:
+Interações verificadas: convite do Header, seleção de serviço, seis modais do
+Processo, teclado do Antes/Depois, FAQ, validação de e-mail, botão desabilitado,
+menu social e navegação mobile. Nenhuma mensagem de formulário foi enviada.
 
-| Par | Contraste |
+Contrastes medidos a partir das cores renderizadas:
+
+| Uso | Contraste |
 | --- | --- |
-| Branco / CTA vermelho | 5,59:1 |
-| Texto secundário / card escuro | 8,71:1 |
-| Texto auxiliar / superfície escura elevada | 5,41:1 |
-| Acento claro / superfície escura elevada | 6,05:1 |
-| Texto secundário / fundo claro | 6,03:1 |
-| Texto auxiliar / fundo claro | 4,88:1 |
-| Borda de campo / fundo do campo | 4,00:1 |
+| #FAFAFA sobre #2563EB | 4,95:1 |
+| Cobalto principal sobre preto (elementos gráficos) | 3,85:1 |
+| Texto de marca sobre superfície elevada | 6,45:1 |
+| Texto secundário sobre superfície elevada | 6,54:1 |
+| Texto muted/desabilitado sobre superfície elevada | 5,87:1 |
+| Texto de erro sobre superfície | 6,55:1 |
 
-Essas medidas cobrem os pares de tokens, não equivalem a uma certificação de
-acessibilidade da página inteira ou de textos sobre imagens.
+O cobalto principal não é usado como texto pequeno sobre preto; esse contexto
+usa `--brand-text`. Legendas e índices do cenário Antes foram escurecidos para
+melhorar contraste sem alterar estrutura. Estes checks não constituem auditoria
+completa de acessibilidade nem validação em todos os navegadores.

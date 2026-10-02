@@ -1,66 +1,4 @@
-/* Tokens, reset, tipografia e componentes compartilhados.
-   Fonte única de verdade do sistema visual: seções usam estes tokens,
-   nunca valores de cor, raio ou sombra soltos. */
-/* Cores do tema escuro (padrão do site). `.theme-dark` devolve o tema escuro
-   a um elemento dentro de uma seção clara. */
-:root, .theme-dark {
-  /* Superfícies: poucas camadas, diferenças sutis. */
-  --bg: #050506;            /* fundo das seções escuras */
-  --surface: #161618;       /* cards e painéis */
-  --surface-2: #1d1d20;     /* elevado: modais, popovers, menu flutuante */
-  --surface-hover: rgba(255, 255, 255, .04);
-  --surface-active: rgba(255, 255, 255, .07);
-
-  /* Texto: contraste decrescente, todos acima de AA no --bg. */
-  --text: #f4f4f5;          /* títulos */
-  --text-2: #c9c9ce;        /* texto principal, leads */
-  --text-3: #a1a1a7;        /* descrições, texto secundário */
-  --text-muted: #808086;    /* legendas, metadados, placeholders */
-
-  /* Bordas */
-  --border-subtle: rgba(255, 255, 255, .07);
-  --border: rgba(255, 255, 255, .11);
-  --border-strong: rgba(255, 255, 255, .2);
-
-  /* Vermelho Launch: ação, seleção, foco e identidade. */
-  --red: #D2001C;           /* preenchimentos: CTA, estado ativo */
-  --red-hover: #E3122D;
-  --red-active: #B20018;
-  --red-text: #FF2436;      /* texto e ícones vermelhos sobre fundo escuro */
-  --red-tint: rgba(210, 0, 28, .14);
-  --focus: #FF2436;
-
-  --success: #7ad9a0;
-  --error: #ff6b76;
-
-  --shadow-card: 0 12px 32px rgba(0, 0, 0, .28);
-}
-
-/* Tema claro: a faixa branca do meio da página (Quem Somos + FAQ).
-   Só troca os tokens; os componentes se adaptam sozinhos. */
-.theme-light {
-  --bg: #ffffff;
-  --surface: #f4f4f5;
-  --surface-2: #ffffff;
-  --surface-hover: rgba(0, 0, 0, .025);
-  --surface-active: rgba(0, 0, 0, .05);
-
-  --text: #0b0b0c;
-  --text-2: #36363b;
-  --text-3: #57575e;
-  --text-muted: #6b6b72;
-
-  --border-subtle: rgba(0, 0, 0, .07);
-  --border: rgba(0, 0, 0, .11);
-  --border-strong: rgba(0, 0, 0, .22);
-
-  --red-text: #D2001C;      /* no branco, o vermelho oficial já tem contraste AA */
-  --red-tint: rgba(210, 0, 28, .08);
-  --focus: #D2001C;
-
-  --shadow-card: 0 12px 32px rgba(0, 0, 0, .08);
-}
-
+/* Reset, tipografia e componentes. Cores em tokens.css. */
 .theme-light, .theme-dark { background: var(--bg); color: var(--text-2); }
 
 :root {
@@ -108,7 +46,7 @@ body {
 
 h1, h2, h3 { font-family: var(--font-display); font-weight: 700; color: var(--text); letter-spacing: -.01em; }
 a { color: inherit; text-decoration: none; }
-::selection { background: var(--red); color: #fff; }
+::selection { background: var(--brand); color: var(--on-brand); }
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 
 .eyebrow {
@@ -117,7 +55,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 12px;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--red-text);
+  color: var(--brand-text);
 }
 
 .wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--gutter); }
@@ -141,7 +79,7 @@ a { color: inherit; text-decoration: none; }
 .navlinks a { color: var(--text-3); transition: color var(--dur) ease; }
 .navlinks a:hover { color: var(--text); }
 
-/* Botões: primário vermelho, secundário contornado. Tamanhos sm / base / lg. */
+/* Botões: primário de marca, secundário contornado. Tamanhos sm / base / lg. */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -149,18 +87,18 @@ a { color: inherit; text-decoration: none; }
   gap: 8px;
   min-height: 44px;
   padding: 0 20px;
-  border: 1px solid var(--red);
+  border: 1px solid var(--brand);
   border-radius: var(--r-md);
-  background: var(--red);
-  color: #fff;
+  background: var(--brand);
+  color: var(--on-brand);
   font: 600 14px/1.2 var(--font-body);
   white-space: nowrap;
   cursor: pointer;
   transition: background var(--dur) ease, border-color var(--dur) ease, color var(--dur) ease, transform 160ms ease;
 }
-.btn:hover { background: var(--red-hover); border-color: var(--red-hover); }
-.btn:active { background: var(--red-active); border-color: var(--red-active); transform: translateY(1px); }
-.btn:disabled, .btn[aria-disabled="true"] { opacity: .6; cursor: not-allowed; transform: none; }
+.btn:hover { background: var(--brand-hover); border-color: var(--brand-hover); }
+.btn:active { background: var(--brand-active); border-color: var(--brand-active); transform: translateY(1px); }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: 1; background: var(--surface-2); border-color: var(--border-strong); color: var(--text-muted); cursor: not-allowed; transform: none; }
 .btn > span[aria-hidden="true"] { transition: transform var(--dur) var(--ease-out); }
 .btn:hover > span[aria-hidden="true"] { transform: translateX(2px); }
 

@@ -10,19 +10,11 @@ import LaunchMark from './icons/LaunchMark.jsx';
 const DEPTH_LAYERS = 13;
 const LAYER_STEP = 2.6;
 
-function mixHex(from, to, t) {
-  const parse = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
-  const [r1, g1, b1] = parse(from);
-  const [r2, g2, b2] = parse(to);
-  const channel = (a, b) => Math.round(a + (b - a) * t);
-  return `rgb(${channel(r1, r2)} ${channel(g1, g2)} ${channel(b1, b2)})`;
-}
-
 const layers = Array.from({ length: DEPTH_LAYERS }, (_, index) => {
   const t = (index + 1) / DEPTH_LAYERS;
   return {
     depth: -(index + 1) * LAYER_STEP,
-    color: mixHex('#981426', '#290007', t)
+    color: `color-mix(in srgb, var(--brand-depth-front), var(--brand-depth-back) ${t * 100}%)`
   };
 });
 
@@ -64,7 +56,7 @@ export default function HeroLogo() {
   return (
     <div className="hero-logo-stage" ref={stageRef}>
       <div className="hero-logo">
-        {/* O vermelho da página se concentra aqui: brilho, anéis e feixes atrás da peça. */}
+        {/* Iluminação neutra preserva os anéis e feixes atrás da peça. */}
         <span className="hero-logo-halo" aria-hidden="true" ref={haloRef} />
         <span className="hero-logo-rings" aria-hidden="true" ref={ringsRef} />
         <span className="hero-logo-beams" aria-hidden="true" ref={beamsRef} />

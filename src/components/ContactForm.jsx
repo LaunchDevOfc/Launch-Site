@@ -101,6 +101,7 @@ export default function ContactForm() {
         <span>Conte o que você precisa</span>
         <h3>Fale com a equipe Launch</h3>
       </div>
+      <noscript><p>Ative o JavaScript para enviar uma mensagem pelo formulário.</p></noscript>
       <form onSubmit={handleSubmit} noValidate aria-busy={status === 'sending'}>
         <div className="contact-form-grid">
           <div className={`contact-field${errorFor('name') ? ' has-error' : ''}`}>

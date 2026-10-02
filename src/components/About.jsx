@@ -1,3 +1,4 @@
+import LaunchMark from './icons/LaunchMark.jsx';
 import ContactLink from './ContactLink.jsx';
 
 export default function About() {
@@ -6,12 +7,12 @@ export default function About() {
       <div className="about-visual" aria-hidden="true" data-reveal>
         <div className="about-visual-orbit about-visual-orbit-one" />
         <div className="about-visual-orbit about-visual-orbit-two" />
-        <img className="about-visual-logo" src="/launch-logo1.svg" alt="" />
+        <LaunchMark className="about-visual-logo" />
       </div>
       <div className="about-copy" data-reveal data-reveal-delay="60">
         <div className="eyebrow">Quem somos</div>
         <h2 className="section-title">Software sob medida, com clareza do primeiro rascunho ao próximo passo.</h2>
-        <p className="about-lead">A Launch é uma software house pequena para empresas que precisam transformar uma operação real em uma solução que funciona de verdade.</p>
+        <p className="about-lead">A Launch é uma empresa de desenvolvimento de software sob medida para negócios que precisam transformar uma operação real em uma solução que funciona de verdade.</p>
         <p>Entendemos o contexto, desenhamos o caminho e construímos perto de quem vai usar. Sem camadas desnecessárias e sem entregar um sistema para desaparecer depois.</p>
         <div className="about-points">
           <div><strong>01</strong><span>Conversa direta com quem constrói.</span></div>

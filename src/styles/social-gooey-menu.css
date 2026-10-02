@@ -21,7 +21,7 @@
 }
 
 .social-gooey-blob {
-  fill: var(--red);
+  fill: var(--brand);
   transform: translate(0, 0);
   transform-box: fill-box;
   transform-origin: center;
@@ -53,8 +53,8 @@
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: var(--red);
-  color: #fff;
+  background: var(--brand);
+  color: var(--on-brand);
   box-shadow: none;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -102,9 +102,9 @@
 }
 
 .social-gooey.is-open .social-gooey-toggle svg { transform: rotate(45deg); }
-.social-gooey-toggle:hover { background: var(--red-hover); transform: scale(1.04); }
-.social-gooey-toggle:active { background: var(--red-active); }
-.social-gooey-action:not(.is-unconfigured):hover { background: var(--red-hover); }
+.social-gooey-toggle:hover { background: var(--brand-hover); transform: scale(1.04); }
+.social-gooey-toggle:active { background: var(--brand-active); }
+.social-gooey-action:not(.is-unconfigured):hover { background: var(--brand-hover); }
 
 .social-gooey-toggle:focus-visible,
 .social-gooey-action:focus-visible {

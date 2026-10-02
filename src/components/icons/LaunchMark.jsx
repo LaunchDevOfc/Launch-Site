@@ -26,15 +26,15 @@ export default function LaunchMark({ variant = 'flat', idPrefix = 'launch-mark',
         <defs>
           {/* Luz principal vindo do alto à esquerda, como na cena 3D do rodapé. */}
           <linearGradient id={faceId} x1="0" y1="0" x2="0.85" y2="1">
-            <stop offset="0" stopColor="#DC6871" />
-            <stop offset="0.24" stopColor="#921524" />
-            <stop offset="0.52" stopColor="#BE1027" />
-            <stop offset="1" stopColor="#56000D" />
+            <stop offset="0" stopColor="var(--brand-metal-highlight)" />
+            <stop offset="0.24" stopColor="var(--brand-metal-mid)" />
+            <stop offset="0.52" stopColor="var(--brand)" />
+            <stop offset="1" stopColor="var(--brand-metal-shadow)" />
           </linearGradient>
           <linearGradient id={sheenId} x1="0" y1="0" x2="1" y2="0.6">
-            <stop offset="0" stopColor="#FFFFFF" stopOpacity="0.3" />
-            <stop offset="0.34" stopColor="#FFFFFF" stopOpacity="0.055" />
-            <stop offset="0.62" stopColor="#FFFFFF" stopOpacity="0" />
+            <stop offset="0" stopColor="var(--color-white)" stopOpacity="0.3" />
+            <stop offset="0.34" stopColor="var(--color-white)" stopOpacity="0.055" />
+            <stop offset="0.62" stopColor="var(--color-white)" stopOpacity="0" />
           </linearGradient>
         </defs>
       )}

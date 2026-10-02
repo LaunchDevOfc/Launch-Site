@@ -2,7 +2,35 @@
 #processo {
   position: relative;
   overflow: hidden;
-  background: var(--bg);
+  isolation: isolate;
+  background: var(--color-white);
+}
+
+.process-background-flow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.process-background-flow-line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+
+.process-background-flow-line--blue { stroke: var(--brand); opacity: .22; }
+.process-background-flow-line--gray { stroke: #AEB8C8; opacity: .38; }
+.process-background-flow-line--soft { opacity: .2; }
+.process-background-flow-line--middle { opacity: .12; }
+
+#processo > .wrap {
+  position: relative;
+  z-index: 1;
 }
 
 .process-flow {
@@ -35,8 +63,8 @@
   padding: 22px;
   border: 1px solid rgba(255, 255, 255, .14);
   border-radius: 14px;
-  background: #1a1a1d;
-  color: #fff;
+  background: var(--surface);
+  color: var(--on-brand);
   box-shadow: 0 16px 34px rgba(0, 0, 0, .22);
   transition: border-color var(--dur) ease, box-shadow var(--dur) ease;
 }
@@ -56,7 +84,7 @@
 }
 
 .process-step-number {
-  color: rgba(255, 255, 255, .42);
+  color: var(--text-muted);
   font: 500 10px var(--font-mono);
   letter-spacing: .13em;
 }
@@ -67,8 +95,8 @@
   height: 38px;
   place-items: center;
   border-radius: 50%;
-  background: #8f1023;
-  color: #fff;
+  background: var(--surface-active);
+  color: var(--on-brand);
 }
 .process-step-icon svg { width: 21px; height: 21px; }
 
@@ -78,8 +106,8 @@
   height: 44px;
   place-items: center;
   border-radius: 50%;
-  background: var(--red-tint);
-  color: var(--red-text);
+  background: var(--brand-tint);
+  color: var(--brand-text);
 }
 
 .process-step h3 {
@@ -89,12 +117,12 @@
   line-height: 1.12;
   letter-spacing: -.03em;
   text-wrap: balance;
-  color: #fff;
+  color: var(--on-brand);
 }
 
 .process-step-tag {
   margin-top: 10px;
-  color: rgba(255, 255, 255, .64);
+  color: var(--text-3);
   font-size: 12.5px;
   line-height: 1.5;
 }
@@ -109,11 +137,11 @@
   font-size: 13px;
   line-height: 1.25;
 }
-.process-step-open:hover { background: #8E0013; border-color: #8E0013; transform: translateY(-1px); }
+.process-step-open:hover { background: var(--brand-hover); border-color: var(--brand-hover); transform: translateY(-1px); }
 
 /* Camada de conexões desenhada em Process.jsx. */
 .process-connection-layer { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-.process-connection-layer path { fill: none; stroke: var(--text-muted); stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.35; vector-effect: non-scaling-stroke; }
+.process-connection-layer path { fill: none; stroke: var(--brand-text); stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.35; vector-effect: non-scaling-stroke; }
 .process-connection-layer .process-connection-arrow { stroke-width: 1.65; }
 
 @keyframes process-card-float {
@@ -177,7 +205,7 @@ html.process-modal-open { overflow: hidden; }
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: var(--red-text);
+  background: var(--brand-text);
 }
 .process-modal-close { position: absolute; top: 16px; right: 16px; }
 

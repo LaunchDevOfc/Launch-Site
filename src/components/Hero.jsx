@@ -10,15 +10,15 @@ export default function Hero() {
           <div className="hero-content">
             <div className="eyebrow">Software house</div>
             <h1>
-              O próximo
+              Software sob
               <br />
-              lançamento pode
+              medida para
               <br />
-              <span className="accent">ser o seu.</span>
+              <span className="accent">sua empresa.</span>
             </h1>
             <p>
-              Transformamos necessidades reais em soluções digitais sob medida, pensadas para colocar projetos em
-              movimento e acompanhar o próximo passo de cada negócio.
+              A Launch desenvolve software sob medida para empresas: sistemas personalizados e soluções digitais
+              que organizam processos e acompanham o crescimento do negócio.
             </p>
             <div className="hero-cta">
               <ContactLink className="btn btn-lg hero-btn" subject="falar-projeto">

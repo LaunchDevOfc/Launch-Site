@@ -6,11 +6,12 @@ import { useEffect, useRef, useState } from 'react';
  */
 export function useInView({ rootMargin = '400px' } = {}) {
   const ref = useRef(null);
-  const [inView, setInView] = useState(() => !('IntersectionObserver' in window));
+  const [inView, setInView] = useState(false);
 
   useEffect(() => {
     const node = ref.current;
     if (!node || inView) return undefined;
+    if (!('IntersectionObserver' in window)) { setInView(true); return undefined; }
     const observer = new IntersectionObserver(
       (entries) => {
         if (!entries[0].isIntersecting) return;

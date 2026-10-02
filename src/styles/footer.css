@@ -3,7 +3,7 @@
 .site-footer-main { display: grid; grid-template-columns: minmax(250px, 1.3fr) minmax(190px, .9fr) minmax(145px, .65fr); gap: clamp(50px, 8vw, 112px); align-items: start; padding-bottom: 40px; border-bottom: 1px solid var(--border-subtle); }
 .site-footer-brand { min-width: 0; }
 .site-footer-logo { display: inline-flex; width: fit-content; align-items: center; }
-.site-footer-logo img { display: block; width: 162px; height: auto; object-fit: contain; transition: transform var(--dur) ease; }
+.site-footer-logo img { display: block; width: 162px; height: auto; object-fit: contain; filter: hue-rotate(var(--brand-artwork-hue)) saturate(.85); transition: transform var(--dur) ease; }
 .site-footer-logo:hover img { transform: translateY(-2px); }
 .site-footer-brand p { max-width: 310px; margin-top: 20px; color: var(--text-3); font-size: 14px; line-height: 1.65; }
 

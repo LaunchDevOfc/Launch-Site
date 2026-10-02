@@ -159,6 +159,13 @@ export default function Process() {
 
   return (
     <section className="section theme-light" id="processo">
+      <svg className="process-background-flow" viewBox="0 0 1200 900" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <path className="process-background-flow-line process-background-flow-line--blue" d="M-80 148 C 116 28 274 264 492 150 S 878 62 1280 190" />
+        <path className="process-background-flow-line process-background-flow-line--gray" d="M-100 184 C 126 64 300 306 526 190 S 906 102 1300 230" />
+        <path className="process-background-flow-line process-background-flow-line--blue process-background-flow-line--soft" d="M-70 690 C 160 560 350 818 604 696 S 988 584 1280 718" />
+        <path className="process-background-flow-line process-background-flow-line--gray process-background-flow-line--soft" d="M-90 734 C 138 602 382 860 642 744 S 1010 634 1300 770" />
+        <path className="process-background-flow-line process-background-flow-line--gray process-background-flow-line--middle" d="M-80 438 C 190 318 360 532 600 438 S 1000 324 1280 456" />
+      </svg>
       <div className="wrap">
         <div className="section-head" data-reveal>
           <div>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useCompactHeader } from '../hooks/useCompactHeader.js';
 import ContactInvite from './ContactInvite.jsx';
-import logoHeader from '../assets/logo-header.svg';
+import LaunchMark from './icons/LaunchMark.jsx';
 import ContactLink from './ContactLink.jsx';
 
 const navLinks = [
@@ -28,8 +28,8 @@ export default function SiteHeader() {
       <header className="site-header" ref={headerRef}>
         <nav className="nav" aria-label="Navegação principal">
           <span className="nav-surface" aria-hidden="true" />
-          <a className="logo" href="#" aria-label="Launch — início">
-            <img src={logoHeader} alt="" width="48" height="48" />
+          <a className="logo" href="#inicio" aria-label="Launch — início">
+            <LaunchMark width="48" height="48" style={{ color: 'var(--brand)' }} />
           </a>
           <div className={`navlinks${menuOpen ? ' open' : ''}`} id="header-links">
             {navLinks.map((link) => link.href === '#contato' ? (

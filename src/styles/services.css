@@ -20,10 +20,10 @@
 .service-showcase-option { position: relative; display: grid; grid-template-columns: 42px minmax(0, 1fr) 17px; align-items: center; gap: 13px; width: 100%; min-height: 70px; padding: 12px; border: 0; border-radius: var(--r-md); background: transparent; color: var(--text-3); text-align: left; cursor: pointer; overflow: hidden; }
 .service-showcase-option > span { color: var(--text-muted); font: 500 10px var(--font-mono); letter-spacing: .12em; transition: color .24s; }
 .service-showcase-option strong { position: relative; z-index: 1; font: 500 clamp(16px, 1.7vw, 19px)/1.17 var(--font-display); letter-spacing: -.03em; }
-.service-showcase-option i { position: relative; z-index: 1; color: var(--red-text); font-size: 15px; font-style: normal; opacity: 0; transform: translate(-5px, 4px); transition: opacity .2s, transform .26s var(--ease-out); }
+.service-showcase-option i { position: relative; z-index: 1; color: var(--brand-text); font-size: 15px; font-style: normal; opacity: 0; transform: translate(-5px, 4px); transition: opacity .2s, transform .26s var(--ease-out); }
 .service-showcase-active { position: absolute; z-index: 0; inset: 4px 0; border: 1px solid var(--border-subtle); border-radius: var(--r-md); background: var(--surface-active); }
 .service-showcase-option.is-selected { color: var(--text); }
-.service-showcase-option.is-selected > span { color: var(--red-text); }
+.service-showcase-option.is-selected > span { color: var(--brand-text); }
 .service-showcase-option.is-selected strong { font-weight: 600; }
 .service-showcase-option.is-selected i { opacity: 1; transform: none; }
 .service-showcase-option:focus-visible { z-index: 1; outline-offset: 2px; }
@@ -33,6 +33,7 @@
 }
 
 .service-showcase-stage { position: sticky; top: 104px; }
+.service-showcase-stage .service-showcase-panel[hidden] { display: none; }
 .service-showcase-panel { display: grid; height: 630px; grid-template-rows: auto minmax(0, 1fr); overflow: hidden; border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--surface); }
 .service-showcase-visual { position: relative; aspect-ratio: 2.35 / 1; overflow: hidden; background: var(--surface-2); }
 .service-showcase-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .4s; }

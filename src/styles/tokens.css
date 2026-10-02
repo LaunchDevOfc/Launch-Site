@@ -1,86 +1,84 @@
-/* Launch: fonte de verdade visual. O vermelho original é preservado. */
+/* Fonte única de cores. Troque --color-brand para experimentar outra marca.
+  As imagens raster da marca usam --brand-artwork-hue; não afeta fotos de serviços. */
 :root {
-  --red: #D2001C;
-  --red-deep: #8E0013;
-  --red-bright: #FF2436;
-  --action: var(--red);
-  --action-hover: #B60018;
-  --action-active: var(--red-deep);
-  --accent-on-dark: #FF7784;
-  --action-soft: rgb(210 0 28 / 7%);
-  --action-soft-dark: rgb(210 0 28 / 14%);
-
-  --background-dark: #0C0C0E;
-  --background-dark-secondary: #121214;
-  --surface-dark: #1B1B1F;
-  --surface-dark-elevated: #242429;
-  --text-dark-primary: #F5F5F6;
-  --text-dark-secondary: #B8B8C0;
-  --text-dark-muted: #9898A3;
-  --border-dark: #38383F;
-  --border-dark-hover: #61616D;
-  --field-border-dark: #73737F;
-
-  --background-light: #F7F6F4;
-  --surface-light: #FFFFFF;
-  --text-light-primary: #1A1A1E;
-  --text-light-secondary: #5D5D67;
-  --text-light-muted: #6B6B75;
-  --border-light: #DDDDE1;
-  --border-light-hover: #85858F;
-  --on-action: #FFFFFF;
-  --success: #92DFAD;
-  --error: #FF929C;
-  --overlay: rgb(12 12 14 / 72%);
-  --header-glass: rgb(255 255 255 / 96%);
-  --focus-ring: var(--red);
-
-  /* Compatibilidade com os nomes já usados nas seções claras. */
-  --ink: var(--text-light-primary);
-  --grey: var(--text-light-secondary);
-  --line: var(--border-light);
-  --paper: var(--surface-light);
-  --paper-2: var(--background-light);
-
-  --font-body: 'Inter', sans-serif;
-  --font-heading: 'Space Grotesk', sans-serif;
-  --font-label: 'JetBrains Mono', monospace;
-  --text-section-title: clamp(32px, 3.4vw, 44px);
-  --text-card-title: 20px;
-  --text-body: 15px;
-  --text-small: 13px;
-  --text-label: 11px;
-  --heading-leading: 1.08;
-  --heading-tracking: -.035em;
-  --body-leading: 1.65;
-
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
-  --section-space: clamp(72px, 7.5vw, 104px);
-  --section-heading-gap: clamp(32px, 4vw, 48px);
-  --container-width: 1120px;
-  --container-gutter: 32px;
-
-  --radius-control: 6px;
-  --radius-card: 12px;
-  --radius-dialog: 16px;
-  --radius-round: 50%;
-  --shadow-card: 0 8px 24px rgb(0 0 0 / 14%);
-  --shadow-overlay: 0 18px 48px rgb(0 0 0 / 24%);
-  --shadow-header: 0 8px 24px rgb(0 0 0 / 10%);
-  --duration-interaction: 180ms;
-  --ease-interaction: cubic-bezier(.22, 1, .36, 1);
-  --control-height: 44px;
-  --control-height-large: 48px;
+  --color-brand: #D2001C;
+  --color-background: #09090B;
+  --color-white: #FAFAFA;
+  --color-surface: #161618;
+  --color-surface-elevated: #1D1D20;
+  --color-muted: #98989F;
+  --on-brand: var(--color-white);
+  --brand-artwork-hue: 0deg;
+  --brand-metal-highlight: color-mix(in srgb, var(--color-brand), var(--color-white) 38%);
+  --brand-metal-mid: color-mix(in srgb, var(--color-brand), black 28%);
+  --brand-metal-shadow: color-mix(in srgb, var(--color-brand), black 60%);
+  --brand-depth-front: color-mix(in srgb, var(--color-brand), black 35%);
+  --brand-depth-back: color-mix(in srgb, var(--color-brand), black 82%);
+  --header-glass: color-mix(in srgb, var(--color-background) 96%, transparent);
+  --header-glass-elevated: color-mix(in srgb, var(--color-surface) 96%, transparent);
+  --visual-line: rgb(250 250 250 / 8%);
+  --visual-light: rgb(250 250 250 / 12%);
+  --visual-light-soft: rgb(250 250 250 / 4%);
+  --comparison-before-bg: #E6E6E8;
+  --comparison-before-text: #3A3A3E;
+  --comparison-before-muted: #626269;
+  --visual-shadow: rgb(0 0 0 / 28%);
 }
 
-@media (max-width: 650px) {
-  :root { --container-gutter: 20px; }
+:root, .theme-dark {
+  /* Superfícies: poucas camadas, diferenças sutis. */
+  --bg: var(--color-background);            /* fundo das seções escuras */
+  --surface: var(--color-surface);       /* cards e painéis */
+  --surface-2: var(--color-surface-elevated);     /* elevado: modais, popovers, menu flutuante */
+  --surface-hover: rgba(255, 255, 255, .04);
+  --surface-active: rgba(255, 255, 255, .07);
+
+  /* Texto: contraste decrescente, todos acima de AA no --bg. */
+  --text: var(--color-white);          /* títulos */
+  --text-2: #c9c9ce;        /* texto principal, leads */
+  --text-3: #a1a1a7;        /* descrições, texto secundário */
+  --text-muted: var(--color-muted);    /* legendas, metadados, placeholders */
+
+  /* Bordas */
+  --border-subtle: rgba(255, 255, 255, .07);
+  --border: rgba(255, 255, 255, .11);
+  --border-strong: rgba(255, 255, 255, .2);
+
+  /* Marca: preenchimento, texto acessível, interação e foco. */
+  --brand: var(--color-brand);           /* preenchimentos: CTA, estado ativo */
+  --brand-hover: color-mix(in srgb, var(--color-brand), black 12%);
+  --brand-active: color-mix(in srgb, var(--color-brand), black 24%);
+  --brand-text: var(--color-brand);      /* acento de marca com contraste em superfícies escuras */
+  --brand-tint: color-mix(in srgb, var(--color-brand) 14%, transparent);
+  --focus: var(--brand-text);
+
+  --success: #7ad9a0;
+  --error: #ff6b76;
+
+  --shadow-card: 0 12px 32px rgba(0, 0, 0, .28);
+}
+
+/* Tema claro: as seções claras existentes (Processo + FAQ).
+   Só troca os tokens; os componentes se adaptam sozinhos. */
+.theme-light {
+  --bg: var(--color-white);
+  --surface: #F1F1F3;
+  --surface-2: var(--color-white);
+  --surface-hover: rgba(0, 0, 0, .025);
+  --surface-active: rgba(0, 0, 0, .05);
+
+  --text: var(--color-background);
+  --text-2: #36363b;
+  --text-3: #57575e;
+  --text-muted: #6b6b72;
+
+  --border-subtle: rgba(0, 0, 0, .07);
+  --border: rgba(0, 0, 0, .11);
+  --border-strong: rgba(0, 0, 0, .22);
+
+  --brand-text: var(--color-brand);      /* contraste AA sobre superfícies claras */
+  --brand-tint: color-mix(in srgb, var(--color-brand) 8%, transparent);
+  --focus: var(--brand-text);
+
+  --shadow-card: 0 12px 32px rgba(0, 0, 0, .08);
 }

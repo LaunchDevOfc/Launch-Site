@@ -1,0 +1,13 @@
+/* Conteúdo real acessível também quando JavaScript está desativado. */
+.service-showcase-panel[hidden] { display: grid !important; }
+.service-showcase-panel { opacity: 1 !important; transform: none !important; height: auto; min-height: 520px; margin-bottom: 24px; }
+.service-showcase-stage { position: static; }
+.service-showcase-visual img { opacity: .92; }
+.service-showcase-nav, .process-step-open, .notification-bell, .social-gooey, .nav-toggle { display: none !important; }
+.service-showcase { grid-template-columns: 1fr; }
+.faq-answer { height: auto !important; opacity: 1 !important; }
+.process-step { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
+.site-header .navlinks { display: flex; position: static; flex-wrap: wrap; }
+.site-header, .site-header .nav { height: auto; }
+.site-header .nav { flex-wrap: wrap; }
+.contact-form-card form { display: none; }
