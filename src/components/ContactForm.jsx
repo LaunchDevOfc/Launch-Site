@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { m } from 'motion/react';
 import { useContact } from '../context/ContactContext.jsx';
-import { contactSubjects, teamSizeOptions } from '../data/contactSubjects.js';
+import { contactSubjects, getContactSubject, getTeamSize, teamSizeOptions } from '../data/contactSubjects.js';
 
-const emptyForm = { name: '', email: '', phone: '', company: '', teamSize: '', message: '', website: '' };
+const emptyForm = { name: '', email: '', phone: '', company: '', teamSize: '', message: '', 'bot-field': '' };
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function validate(form, subject) {
@@ -12,14 +12,18 @@ function validate(form, subject) {
   else if (form.name.trim().length > 100) errors.name = 'Use no máximo 100 caracteres.';
   if (!form.email.trim()) errors.email = 'Informe seu e-mail.';
   else if (!emailPattern.test(form.email.trim())) errors.email = 'Informe um e-mail válido.';
+  else if (form.email.trim().length > 160) errors.email = 'Use no máximo 160 caracteres.';
   const phoneDigits = form.phone.replace(/\D/g, '');
   if (!form.phone.trim()) errors.phone = 'Informe seu telefone.';
   else if (phoneDigits.length < 8 || phoneDigits.length > 15) errors.phone = 'Informe um telefone válido.';
+  else if (form.phone.length > 30) errors.phone = 'Use no máximo 30 caracteres.';
   if (!form.company.trim()) errors.company = 'Informe o nome da empresa.';
   else if (form.company.trim().length > 120) errors.company = 'Use no máximo 120 caracteres.';
-  if (!subject) errors.subject = 'Selecione um assunto.';
+  if (form.teamSize && !getTeamSize(form.teamSize)) errors.teamSize = 'Selecione um tamanho de equipe válido.';
+  if (!getContactSubject(subject)) errors.subject = 'Selecione um assunto.';
   if (!form.message.trim()) errors.message = 'Conte brevemente sobre o projeto.';
   else if (form.message.trim().length < 10) errors.message = 'Escreva pelo menos 10 caracteres.';
+  else if (form.message.trim().length > 3000) errors.message = 'Use no máximo 3000 caracteres.';
   return errors;
 }
 
@@ -29,7 +33,9 @@ export default function ContactForm() {
   const [touched, setTouched] = useState({});
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle');
-  const startedAt = useRef(Date.now());
+  const submitting = useRef(false);
+  const selectedSubject = getContactSubject(subject);
+  const selectedTeamSize = getTeamSize(form.teamSize);
 
   useEffect(() => {
     if (!subject) return;
@@ -48,7 +54,7 @@ export default function ContactForm() {
       const nextForm = { ...form, [field]: value };
       setForm(nextForm);
       if (touched[field]) setErrors(validate(nextForm, subject));
-      if (status !== 'idle') setStatus('idle');
+      setStatus((current) => current === 'sending' ? current : 'idle');
     };
   }
 
@@ -64,22 +70,28 @@ export default function ContactForm() {
     setSubject(value);
     setTouched((current) => ({ ...current, subject: true }));
     setErrors(validate(form, value));
-    if (status !== 'idle') setStatus('idle');
+    setStatus((current) => current === 'sending' ? current : 'idle');
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
+    if (submitting.current) return;
     const nextErrors = validate(form, subject);
-    setTouched({ name: true, email: true, phone: true, company: true, subject: true, message: true });
+    setTouched({ name: true, email: true, phone: true, company: true, teamSize: true, subject: true, message: true });
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) return;
 
+    submitting.current = true;
     setStatus('sending');
     try {
-      const response = await fetch('/api/contact', {
+      const payload = new URLSearchParams(new FormData(event.currentTarget));
+      payload.set('form-name', 'launch-contact');
+      payload.set('subject', selectedSubject.label);
+      payload.set('teamSizeLabel', selectedTeamSize?.label ?? 'Não informado');
+      const response = await fetch('/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, subjectId: subject, startedAt: startedAt.current })
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: payload.toString()
       });
       if (!response.ok) throw new Error('Falha no envio');
       setStatus('success');
@@ -87,9 +99,10 @@ export default function ContactForm() {
       setSubject('');
       setTouched({});
       setErrors({});
-      startedAt.current = Date.now();
     } catch {
       setStatus('error');
+    } finally {
+      submitting.current = false;
     }
   }
 
@@ -102,7 +115,10 @@ export default function ContactForm() {
         <h3>Fale com a equipe Launch</h3>
       </div>
       <noscript><p>Ative o JavaScript para enviar uma mensagem pelo formulário.</p></noscript>
-      <form onSubmit={handleSubmit} noValidate aria-busy={status === 'sending'}>
+      <form name="launch-contact" method="POST" action="/" data-netlify="true" data-netlify-honeypot="bot-field" onSubmit={handleSubmit} noValidate aria-busy={status === 'sending'}>
+        <input type="hidden" name="form-name" value="launch-contact" />
+        <input type="hidden" name="subject" value={selectedSubject?.label ?? ''} />
+        <input type="hidden" name="teamSizeLabel" value={selectedTeamSize?.label ?? 'Não informado'} />
         <div className="contact-form-grid">
           <div className={`contact-field${errorFor('name') ? ' has-error' : ''}`}>
             <label htmlFor="contact-name">Nome <span aria-hidden="true">*</span></label>
@@ -129,21 +145,22 @@ export default function ContactForm() {
           </div>
         </div>
 
-        <div className="contact-field">
+        <div className={`contact-field${errorFor('teamSize') ? ' has-error' : ''}`}>
           <label htmlFor="contact-team-size">Tamanho da equipe <em>(opcional)</em></label>
           <div className="contact-select-wrap">
-            <select id="contact-team-size" name="teamSize" value={form.teamSize} onChange={update('teamSize')}>
+            <select id="contact-team-size" name="teamSize" value={form.teamSize} onChange={update('teamSize')} aria-invalid={Boolean(errorFor('teamSize'))} aria-describedby={errorFor('teamSize') ? 'contact-team-size-error' : undefined}>
               <option value="">Não informado</option>
               {teamSizeOptions.map((option) => <option value={option.id} key={option.id}>{option.label}</option>)}
             </select>
             <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 8 4 4 4-4" /></svg>
           </div>
+          {errorFor('teamSize') && <small id="contact-team-size-error" className="contact-field-error">{errors.teamSize}</small>}
         </div>
 
         <div className={`contact-field${errorFor('subject') ? ' has-error' : ''}`}>
           <label htmlFor="contact-subject">Assunto / interesse <span aria-hidden="true">*</span></label>
           <div className="contact-select-wrap">
-            <select id="contact-subject" name="subject" value={subject} required onChange={changeSubject} aria-invalid={Boolean(errorFor('subject'))} aria-describedby={errorFor('subject') ? 'contact-subject-error' : undefined}>
+            <select id="contact-subject" name="subjectId" value={subject} required onChange={changeSubject} aria-invalid={Boolean(errorFor('subject'))} aria-describedby={errorFor('subject') ? 'contact-subject-error' : undefined}>
               <option value="" disabled>Selecione um assunto</option>
               {contactSubjects.map((option) => <option value={option.id} key={option.id}>{option.label}</option>)}
             </select>
@@ -161,7 +178,7 @@ export default function ContactForm() {
 
         <div className="contact-honeypot" aria-hidden="true">
           <label htmlFor="contact-website">Website</label>
-          <input id="contact-website" name="website" type="text" tabIndex="-1" autoComplete="off" value={form.website} onChange={update('website')} />
+          <input id="contact-website" name="bot-field" type="text" tabIndex="-1" autoComplete="off" value={form['bot-field']} onChange={update('bot-field')} />
         </div>
 
         <m.button className="btn btn-lg contact-submit" type="submit" disabled={status === 'sending'} whileTap={{ scale: .99 }}>
