@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Form blueprint</title>
+</head>
+<body>
+  <!-- Static blueprint for Netlify's deploy-time form detection. -->
+  <form name="launch-contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="launch-contact">
+    <input type="text" name="name">
+    <input type="email" name="email">
+    <input type="tel" name="phone">
+    <input type="text" name="company">
+    <input type="text" name="teamSize">
+    <input type="text" name="teamSizeLabel">
+    <input type="text" name="subjectId">
+    <input type="text" name="subject">
+    <textarea name="message"></textarea>
+    <input type="text" name="bot-field" value="">
+  </form>
+</body>
+</html>

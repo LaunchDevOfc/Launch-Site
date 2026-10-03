@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { m } from 'motion/react';
 import { useContact } from '../context/ContactContext.jsx';
 import { contactSubjects, teamSizeOptions } from '../data/contactSubjects.js';
@@ -29,7 +29,6 @@ export default function ContactForm() {
   const [touched, setTouched] = useState({});
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle');
-  const startedAt = useRef(Date.now());
 
   useEffect(() => {
     if (!subject) return;
@@ -76,10 +75,22 @@ export default function ContactForm() {
 
     setStatus('sending');
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch('/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, subjectId: subject, startedAt: startedAt.current })
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          'form-name': 'launch-contact',
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          company: form.company,
+          teamSize: form.teamSize,
+          teamSizeLabel: teamSizeOptions.find((option) => option.id === form.teamSize)?.label ?? '',
+          subjectId: subject,
+          subject: contactSubjects.find((option) => option.id === subject)?.label ?? '',
+          message: form.message,
+          'bot-field': form.website,
+        }).toString()
       });
       if (!response.ok) throw new Error('Falha no envio');
       setStatus('success');
@@ -87,7 +98,6 @@ export default function ContactForm() {
       setSubject('');
       setTouched({});
       setErrors({});
-      startedAt.current = Date.now();
     } catch {
       setStatus('error');
     }
@@ -102,7 +112,8 @@ export default function ContactForm() {
         <h3>Fale com a equipe Launch</h3>
       </div>
       <noscript><p>Ative o JavaScript para enviar uma mensagem pelo formulário.</p></noscript>
-      <form onSubmit={handleSubmit} noValidate aria-busy={status === 'sending'}>
+      <form name="launch-contact" method="POST" onSubmit={handleSubmit} noValidate aria-busy={status === 'sending'}>
+        <input type="hidden" name="form-name" value="launch-contact" />
         <div className="contact-form-grid">
           <div className={`contact-field${errorFor('name') ? ' has-error' : ''}`}>
             <label htmlFor="contact-name">Nome <span aria-hidden="true">*</span></label>
@@ -161,7 +172,7 @@ export default function ContactForm() {
 
         <div className="contact-honeypot" aria-hidden="true">
           <label htmlFor="contact-website">Website</label>
-          <input id="contact-website" name="website" type="text" tabIndex="-1" autoComplete="off" value={form.website} onChange={update('website')} />
+          <input id="contact-website" name="bot-field" type="text" tabIndex="-1" autoComplete="off" value={form.website} onChange={update('website')} />
         </div>
 
         <m.button className="btn btn-lg contact-submit" type="submit" disabled={status === 'sending'} whileTap={{ scale: .99 }}>
