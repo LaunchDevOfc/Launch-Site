@@ -6,6 +6,15 @@ import { contactSubjects, teamSizeOptions } from '../data/contactSubjects.js';
 const emptyForm = { name: '', email: '', phone: '', company: '', teamSize: '', message: '', website: '' };
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+function formatPhone(value) {
+  const digits = value.replace(/\D/g, '').slice(0, 11);
+  if (!digits) return '';
+  if (digits.length <= 2) return `(${digits}`;
+  const local = digits.slice(2);
+  const split = digits.length === 11 ? 5 : 4;
+  return `(${digits.slice(0, 2)}) ${local.slice(0, split)}${local.length > split ? `-${local.slice(split)}` : ''}`;
+}
+
 function validate(form, subject) {
   const errors = {};
   if (!form.name.trim()) errors.name = 'Informe seu nome.';
@@ -49,6 +58,38 @@ export default function ContactForm() {
       if (touched[field]) setErrors(validate(nextForm, subject));
       if (status !== 'idle') setStatus('idle');
     };
+  }
+
+  function updatePhone(event) {
+    const input = event.target;
+    let value = input.value;
+    let caret = input.selectionStart ?? value.length;
+    const inputType = event.nativeEvent.inputType;
+    // Deleting a separator also deletes the adjacent digit instead of restoring it.
+    if (inputType?.startsWith('delete') && value.replace(/\D/g, '') === form.phone.replace(/\D/g, '')) {
+      if (inputType === 'deleteContentBackward') {
+        const index = value.slice(0, caret).search(/\d\D*$/);
+        if (index >= 0) {
+          value = value.slice(0, index) + value.slice(index + 1);
+          caret = index;
+        }
+      } else if (inputType === 'deleteContentForward') {
+        const offset = value.slice(caret).search(/\d/);
+        if (offset >= 0) value = value.slice(0, caret + offset) + value.slice(caret + offset + 1);
+      }
+    }
+    const digitsBeforeCaret = value.slice(0, caret).replace(/\D/g, '').length;
+    const formatted = formatPhone(value);
+    update('phone')({ target: { value: formatted } });
+    let position = 0;
+    let digitsSeen = 0;
+    while (position < formatted.length && digitsSeen < digitsBeforeCaret) {
+      if (/\d/.test(formatted[position])) digitsSeen++;
+      position++;
+    }
+    requestAnimationFrame(() => {
+      if (document.activeElement === input) input.setSelectionRange(position, position);
+    });
   }
 
   function blur(field) {
@@ -130,7 +171,7 @@ export default function ContactForm() {
         <div className="contact-form-grid">
           <div className={`contact-field${errorFor('phone') ? ' has-error' : ''}`}>
             <label htmlFor="contact-phone">WhatsApp / Telefone <span aria-hidden="true">*</span></label>
-            <input id="contact-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" maxLength="30" required placeholder="(00) 00000-0000" value={form.phone} onChange={update('phone')} onBlur={blur('phone')} aria-invalid={Boolean(errorFor('phone'))} aria-describedby={errorFor('phone') ? 'contact-phone-error' : undefined} />
+            <input id="contact-phone" name="phone" type="tel" inputMode="numeric" autoComplete="tel" maxLength="15" required placeholder="(00) 00000-0000" value={form.phone} onChange={updatePhone} onBlur={blur('phone')} aria-invalid={Boolean(errorFor('phone'))} aria-describedby={errorFor('phone') ? 'contact-phone-error' : undefined} />
             {errorFor('phone') && <small id="contact-phone-error" className="contact-field-error">{errors.phone}</small>}
           </div>
           <div className={`contact-field${errorFor('company') ? ' has-error' : ''}`}>
